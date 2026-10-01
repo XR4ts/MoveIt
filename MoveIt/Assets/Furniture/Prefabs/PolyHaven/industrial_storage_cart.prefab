@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6977289092192568965
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6326716083864994728}
+  - component: {fileID: 5146298884800682327}
+  - component: {fileID: 8641362694722723712}
+  m_Layer: 0
+  m_Name: industrial_storage_cart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6326716083864994728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6977289092192568965}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1137655948209954923}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5146298884800682327
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6977289092192568965}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.6033487, y: 1.3773844, z: 1.1027455}
+  m_Center: {x: 0, y: 0.6886922, z: 0}
+--- !u!114 &8641362694722723712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6977289092192568965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6569e67d64c42c59c8ab24dcd51ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoveIt.Furniture.FurnitureItem
+  m_Id: industrial_storage_cart
+  m_DisplayName: Industrial Storage Cart
+  m_Category: Storage
+  m_Attribution: Industrial Storage Cart by Jule Bielitz (PolyHaven), CC0, https://polyhaven.com/a/industrial_storage_cart
+--- !u!1001 &6425578002926298082
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6326716083864994728}
+    m_Modifications:
+    - target: {fileID: -2961687225817480311, guid: 47f293ad500674a7791df70ad99383ea, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2961687225817480311, guid: 47f293ad500674a7791df70ad99383ea, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.002320528
+      objectReference: {fileID: 0}
+    - target: {fileID: -2961687225817480311, guid: 47f293ad500674a7791df70ad99383ea, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.000000059604645
+      objectReference: {fileID: 0}
+    - target: {fileID: -2961687225817480311, guid: 47f293ad500674a7791df70ad99383ea, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2961687225817480311, guid: 47f293ad500674a7791df70ad99383ea, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2961687225817480311, guid: 47f293ad500674a7791df70ad99383ea, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2961687225817480311, guid: 47f293ad500674a7791df70ad99383ea, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2961687225817480311, guid: 47f293ad500674a7791df70ad99383ea, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2961687225817480311, guid: 47f293ad500674a7791df70ad99383ea, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2961687225817480311, guid: 47f293ad500674a7791df70ad99383ea, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -46635440724413395, guid: 47f293ad500674a7791df70ad99383ea, type: 3}
+      propertyPath: m_Name
+      value: Model
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: -4161369568681901532, guid: 47f293ad500674a7791df70ad99383ea, type: 3}
+--- !u!4 &1137655948209954923 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -2961687225817480311, guid: 47f293ad500674a7791df70ad99383ea, type: 3}
+  m_PrefabInstance: {fileID: 6425578002926298082}
+  m_PrefabAsset: {fileID: 0}

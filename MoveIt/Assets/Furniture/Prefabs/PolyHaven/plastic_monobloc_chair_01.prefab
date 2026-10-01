@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7434868302542388244
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3133156699093798097}
+  - component: {fileID: 7174449381884099273}
+  - component: {fileID: 43419169054571719}
+  m_Layer: 0
+  m_Name: plastic_monobloc_chair_01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3133156699093798097
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7434868302542388244}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8358771145529627678}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7174449381884099273
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7434868302542388244}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.64186114, y: 0.8798412, z: 0.6275919}
+  m_Center: {x: 0, y: 0.4399206, z: 0}
+--- !u!114 &43419169054571719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7434868302542388244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6569e67d64c42c59c8ab24dcd51ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoveIt.Furniture.FurnitureItem
+  m_Id: plastic_monobloc_chair_01
+  m_DisplayName: Plastic Monobloc Chair 01
+  m_Category: Seating
+  m_Attribution: Plastic Monobloc Chair 01 by Kuutti Siitonen (PolyHaven), CC0, https://polyhaven.com/a/plastic_monobloc_chair_01
+--- !u!1001 &1049455454000955276
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3133156699093798097}
+    m_Modifications:
+    - target: {fileID: -7848098029262717641, guid: a36f6d0999a514e98b074cf65f21529c, type: 3}
+      propertyPath: m_Name
+      value: Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831620704710863762, guid: a36f6d0999a514e98b074cf65f21529c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831620704710863762, guid: a36f6d0999a514e98b074cf65f21529c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.000019550323
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831620704710863762, guid: a36f6d0999a514e98b074cf65f21529c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.022154689
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831620704710863762, guid: a36f6d0999a514e98b074cf65f21529c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831620704710863762, guid: a36f6d0999a514e98b074cf65f21529c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831620704710863762, guid: a36f6d0999a514e98b074cf65f21529c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831620704710863762, guid: a36f6d0999a514e98b074cf65f21529c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831620704710863762, guid: a36f6d0999a514e98b074cf65f21529c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831620704710863762, guid: a36f6d0999a514e98b074cf65f21529c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831620704710863762, guid: a36f6d0999a514e98b074cf65f21529c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: -4161369568681901532, guid: a36f6d0999a514e98b074cf65f21529c, type: 3}
+--- !u!4 &8358771145529627678 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8831620704710863762, guid: a36f6d0999a514e98b074cf65f21529c, type: 3}
+  m_PrefabInstance: {fileID: 1049455454000955276}
+  m_PrefabAsset: {fileID: 0}
