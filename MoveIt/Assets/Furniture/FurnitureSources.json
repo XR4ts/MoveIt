@@ -1,0 +1,827 @@
+{
+  "items": [
+    {
+      "id": "LACK_30449908_55x55",
+      "displayName": "LACK side table",
+      "category": "Tables",
+      "source": "IKEA",
+      "author": "Inter IKEA Systems B.V.",
+      "license": "CC BY-NC-SA 4.0",
+      "url": "https://www.ikea.com/nl/en/p/lack-side-table-white-30449908/"
+    },
+    {
+      "id": "EKET_70332124_35x25x35",
+      "displayName": "EKET cabinet",
+      "category": "Storage",
+      "source": "IKEA",
+      "author": "Inter IKEA Systems B.V.",
+      "license": "CC BY-NC-SA 4.0",
+      "url": "https://www.ikea.com/nl/en/p/eket-cabinet-white-70332124/",
+      "yaw": 90
+    },
+    {
+      "id": "EKET_00333947_70x35x35",
+      "displayName": "EKET cabinet with 2 drawers",
+      "category": "Storage",
+      "source": "IKEA",
+      "author": "Inter IKEA Systems B.V.",
+      "license": "CC BY-NC-SA 4.0",
+      "url": "https://www.ikea.com/nl/en/p/eket-cabinet-with-2-drawers-white-00333947/",
+      "yaw": 90
+    },
+    {
+      "id": "BEKVAM_30178884",
+      "displayName": "BEKVÄM step stool",
+      "category": "Seating",
+      "source": "IKEA",
+      "author": "Inter IKEA Systems B.V.",
+      "license": "CC BY-NC-SA 4.0",
+      "url": "https://www.ikea.com/pt/en/p/bekvaem-step-stool-black-30178884/",
+      "yaw": -90
+    },
+    {
+      "id": "BEKVAM_40463852",
+      "displayName": "BEKVÄM step stool (EU)",
+      "category": "Seating",
+      "source": "IKEA",
+      "author": "Inter IKEA Systems B.V.",
+      "license": "CC BY-NC-SA 4.0",
+      "url": "https://www.ikea.com/nl/en/p/bekvaem-step-stool-black-40463852/",
+      "yaw": -90
+    },
+    {
+      "id": "DALFRED_60155602",
+      "displayName": "DALFRED bar stool",
+      "category": "Seating",
+      "source": "IKEA",
+      "author": "Inter IKEA Systems B.V.",
+      "license": "CC BY-NC-SA 4.0",
+      "url": "https://www.ikea.com/nl/en/p/dalfred-bar-stool-black-60155602/"
+    },
+    {
+      "id": "ArmChair_01",
+      "displayName": "Arm Chair 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/ArmChair_01"
+    },
+    {
+      "id": "BarberShopChair_01",
+      "displayName": "Barber Shop Chair 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Fernando Quinn",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/BarberShopChair_01"
+    },
+    {
+      "id": "ClassicConsole_01",
+      "displayName": "Classic Console 01",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/ClassicConsole_01"
+    },
+    {
+      "id": "ClassicNightstand_01",
+      "displayName": "Classic Nightstand 01",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/ClassicNightstand_01"
+    },
+    {
+      "id": "CoffeeCart_01",
+      "displayName": "Coffee Cart 01",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Joe Seabuhr",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/CoffeeCart_01"
+    },
+    {
+      "id": "CoffeeTable_01",
+      "displayName": "Coffee Table 01",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Fernando Quinn",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/CoffeeTable_01"
+    },
+    {
+      "id": "GothicBed_01",
+      "displayName": "Gothic Bed 01",
+      "category": "Beds",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/GothicBed_01"
+    },
+    {
+      "id": "GothicCabinet_01",
+      "displayName": "Gothic Cabinet 01",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/GothicCabinet_01"
+    },
+    {
+      "id": "GothicCommode_01",
+      "displayName": "Gothic Commode 01",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/GothicCommode_01"
+    },
+    {
+      "id": "GreenChair_01",
+      "displayName": "Green Chair 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/GreenChair_01"
+    },
+    {
+      "id": "Ottoman_01",
+      "displayName": "Ottoman 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Caspian Fortune",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/Ottoman_01"
+    },
+    {
+      "id": "Rockingchair_01",
+      "displayName": "Rockingchair 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Jorge Camacho",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/Rockingchair_01"
+    },
+    {
+      "id": "SchoolChair_01",
+      "displayName": "School Chair 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Ethan Place",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/SchoolChair_01"
+    },
+    {
+      "id": "SchoolDesk_01",
+      "displayName": "School Desk 01",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Ethan Place",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/SchoolDesk_01"
+    },
+    {
+      "id": "Shelf_01",
+      "displayName": "Shelf 01",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Gabriel Radić",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/Shelf_01"
+    },
+    {
+      "id": "Sofa_01",
+      "displayName": "Sofa 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/Sofa_01"
+    },
+    {
+      "id": "WoodenChair_01",
+      "displayName": "Wooden Chair 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Jake Mobley",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/WoodenChair_01"
+    },
+    {
+      "id": "WoodenTable_01",
+      "displayName": "Wooden Table 01",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Ethan Place",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/WoodenTable_01"
+    },
+    {
+      "id": "WoodenTable_02",
+      "displayName": "Wooden Table 02",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Fran Calvente",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/WoodenTable_02"
+    },
+    {
+      "id": "WoodenTable_03",
+      "displayName": "Wooden Table 03",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Gabriel Radić",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/WoodenTable_03"
+    },
+    {
+      "id": "bar_chair_round_01",
+      "displayName": "Bar Chair Round 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Dairon Sanchez",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/bar_chair_round_01"
+    },
+    {
+      "id": "chinese_armchair",
+      "displayName": "Chinese Armchair",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/chinese_armchair"
+    },
+    {
+      "id": "chinese_cabinet",
+      "displayName": "Chinese Cabinet",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/chinese_cabinet"
+    },
+    {
+      "id": "chinese_commode",
+      "displayName": "Chinese Commode",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/chinese_commode"
+    },
+    {
+      "id": "chinese_console_table",
+      "displayName": "Chinese Console Table",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/chinese_console_table"
+    },
+    {
+      "id": "chinese_screen_panels",
+      "displayName": "Chinese Screen Panels",
+      "category": "Ornaments",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/chinese_screen_panels"
+    },
+    {
+      "id": "chinese_sofa",
+      "displayName": "Chinese Sofa",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/chinese_sofa"
+    },
+    {
+      "id": "chinese_stool",
+      "displayName": "Chinese Stool",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/chinese_stool"
+    },
+    {
+      "id": "chinese_tea_table",
+      "displayName": "Chinese Tea Table",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/chinese_tea_table"
+    },
+    {
+      "id": "coffee_table_round_01",
+      "displayName": "Coffee Table Round 01",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/coffee_table_round_01"
+    },
+    {
+      "id": "dining_chair_02",
+      "displayName": "Dining Chair 02",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "James Ray Cock",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/dining_chair_02"
+    },
+    {
+      "id": "dining_table",
+      "displayName": "Dining Table",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Aron Łyczek",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/dining_table"
+    },
+    {
+      "id": "drawer_cabinet",
+      "displayName": "Drawer Cabinet",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/drawer_cabinet"
+    },
+    {
+      "id": "folding_wooden_stool",
+      "displayName": "Folding Wooden Stool",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/folding_wooden_stool"
+    },
+    {
+      "id": "gallinera_chair",
+      "displayName": "Gallinera Chair",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/gallinera_chair"
+    },
+    {
+      "id": "gallinera_table",
+      "displayName": "Gallinera Table",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/gallinera_table"
+    },
+    {
+      "id": "gothic_coffee_table",
+      "displayName": "Gothic Coffee Table",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/gothic_coffee_table"
+    },
+    {
+      "id": "industrial_coffee_table",
+      "displayName": "Industrial Coffee Table",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/industrial_coffee_table"
+    },
+    {
+      "id": "industrial_storage_cart",
+      "displayName": "Industrial Storage Cart",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Jule Bielitz",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/industrial_storage_cart"
+    },
+    {
+      "id": "metal_office_desk",
+      "displayName": "Metal Office Desk",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/metal_office_desk"
+    },
+    {
+      "id": "metal_stool_01",
+      "displayName": "Metal Stool 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/metal_stool_01"
+    },
+    {
+      "id": "metal_stool_02",
+      "displayName": "Metal Stool 02",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/metal_stool_02"
+    },
+    {
+      "id": "metal_stool_03",
+      "displayName": "Metal Stool 03",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Flo Tasser",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/metal_stool_03"
+    },
+    {
+      "id": "mid_century_lounge_chair",
+      "displayName": "Mid Century Lounge Chair",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kuutti Siitonen",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/mid_century_lounge_chair"
+    },
+    {
+      "id": "modern_arm_chair_01",
+      "displayName": "Modern Arm Chair 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Vibrant Nordic",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/modern_arm_chair_01"
+    },
+    {
+      "id": "modern_coffee_table_01",
+      "displayName": "Modern Coffee Table 01",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Amin",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/modern_coffee_table_01"
+    },
+    {
+      "id": "modern_coffee_table_02",
+      "displayName": "Modern Coffee Table 02",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Amin",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/modern_coffee_table_02"
+    },
+    {
+      "id": "modern_wooden_cabinet",
+      "displayName": "Modern Wooden Cabinet",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Patrik Pangerl",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/modern_wooden_cabinet"
+    },
+    {
+      "id": "modular_street_seating",
+      "displayName": "Modular Street Seating",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Stuart Attenborrow",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/modular_street_seating"
+    },
+    {
+      "id": "old_bed_frame",
+      "displayName": "Old Bed Frame",
+      "category": "Beds",
+      "source": "PolyHaven",
+      "author": "Luca B",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/old_bed_frame"
+    },
+    {
+      "id": "ornate_mirror_01",
+      "displayName": "Ornate Mirror 01",
+      "category": "Wall Decor",
+      "source": "PolyHaven",
+      "author": "James Ray Cock",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/ornate_mirror_01"
+    },
+    {
+      "id": "outdoor_table_chair_set_01",
+      "displayName": "Outdoor Table Chair Set 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "James Ray Cock",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/outdoor_table_chair_set_01"
+    },
+    {
+      "id": "painted_wooden_bench",
+      "displayName": "Painted Wooden Bench",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/painted_wooden_bench"
+    },
+    {
+      "id": "painted_wooden_cabinet",
+      "displayName": "Painted Wooden Cabinet",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/painted_wooden_cabinet"
+    },
+    {
+      "id": "painted_wooden_cabinet_02",
+      "displayName": "Painted Wooden Cabinet 02",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/painted_wooden_cabinet_02"
+    },
+    {
+      "id": "painted_wooden_chair_01",
+      "displayName": "Painted Wooden Chair 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kuutti Siitonen",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/painted_wooden_chair_01"
+    },
+    {
+      "id": "painted_wooden_chair_02",
+      "displayName": "Painted Wooden Chair 02",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/painted_wooden_chair_02"
+    },
+    {
+      "id": "painted_wooden_nightstand",
+      "displayName": "Painted Wooden Nightstand",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/painted_wooden_nightstand"
+    },
+    {
+      "id": "painted_wooden_shelves",
+      "displayName": "Painted Wooden Shelves",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/painted_wooden_shelves"
+    },
+    {
+      "id": "painted_wooden_sofa",
+      "displayName": "Painted Wooden Sofa",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/painted_wooden_sofa"
+    },
+    {
+      "id": "painted_wooden_stool",
+      "displayName": "Painted Wooden Stool",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/painted_wooden_stool"
+    },
+    {
+      "id": "painted_wooden_table",
+      "displayName": "Painted Wooden Table",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/painted_wooden_table"
+    },
+    {
+      "id": "plastic_monobloc_chair_01",
+      "displayName": "Plastic Monobloc Chair 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kuutti Siitonen",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/plastic_monobloc_chair_01"
+    },
+    {
+      "id": "round_wooden_table_01",
+      "displayName": "Round Wooden Table 01",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/round_wooden_table_01"
+    },
+    {
+      "id": "round_wooden_table_02",
+      "displayName": "Round Wooden Table 02",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/round_wooden_table_02"
+    },
+    {
+      "id": "side_table_01",
+      "displayName": "Side Table 01",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "James Ray Cock",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/side_table_01"
+    },
+    {
+      "id": "side_table_tall_01",
+      "displayName": "Side Table Tall 01",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "James Ray Cock",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/side_table_tall_01"
+    },
+    {
+      "id": "small_wooden_table_01",
+      "displayName": "Small Wooden Table 01",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/small_wooden_table_01"
+    },
+    {
+      "id": "sofa_02",
+      "displayName": "Sofa 02",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kirill Sannikov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/sofa_02"
+    },
+    {
+      "id": "sofa_03",
+      "displayName": "Sofa 03",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Fran Calvente",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/sofa_03"
+    },
+    {
+      "id": "steel_frame_shelves_01",
+      "displayName": "Steel Frame Shelves 01",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "James Ray Cock",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/steel_frame_shelves_01"
+    },
+    {
+      "id": "steel_frame_shelves_02",
+      "displayName": "Steel Frame Shelves 02",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "James Ray Cock",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/steel_frame_shelves_02"
+    },
+    {
+      "id": "steel_frame_shelves_03",
+      "displayName": "Steel Frame Shelves 03",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/steel_frame_shelves_03"
+    },
+    {
+      "id": "stone_fire_pit",
+      "displayName": "Stone Fire Pit",
+      "category": "Outdoor Structures",
+      "source": "PolyHaven",
+      "author": "Sebastian Platen",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/stone_fire_pit"
+    },
+    {
+      "id": "tool_cart",
+      "displayName": "Tool Cart",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Savva Zakharov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/tool_cart"
+    },
+    {
+      "id": "vintage_cabinet_01",
+      "displayName": "Vintage Cabinet 01",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Rico Cilliers",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/vintage_cabinet_01"
+    },
+    {
+      "id": "vintage_day_bed",
+      "displayName": "Vintage Day Bed",
+      "category": "Beds",
+      "source": "PolyHaven",
+      "author": "Aron Łyczek",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/vintage_day_bed"
+    },
+    {
+      "id": "vintage_wooden_drawer_01",
+      "displayName": "Vintage Wooden Drawer 01",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "James Ray Cock",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/vintage_wooden_drawer_01"
+    },
+    {
+      "id": "wooden_bookshelf_worn",
+      "displayName": "Wooden Bookshelf Worn",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/wooden_bookshelf_worn"
+    },
+    {
+      "id": "wooden_display_shelves_01",
+      "displayName": "Wooden Display Shelves 01",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "James Ray Cock",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/wooden_display_shelves_01"
+    },
+    {
+      "id": "wooden_picnic_table",
+      "displayName": "Wooden Picnic Table",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Ulan Cabanilla",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/wooden_picnic_table"
+    },
+    {
+      "id": "wooden_stool_01",
+      "displayName": "Wooden Stool 01",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kuutti Siitonen",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/wooden_stool_01"
+    },
+    {
+      "id": "wooden_stool_02",
+      "displayName": "Wooden Stool 02",
+      "category": "Seating",
+      "source": "PolyHaven",
+      "author": "Kuutti Siitonen",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/wooden_stool_02"
+    },
+    {
+      "id": "wooden_table_02",
+      "displayName": "Wooden Table 02",
+      "category": "Tables",
+      "source": "PolyHaven",
+      "author": "Serhii Khromov",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/wooden_table_02"
+    },
+    {
+      "id": "worn_metal_rack",
+      "displayName": "Worn Metal Rack",
+      "category": "Storage",
+      "source": "PolyHaven",
+      "author": "Luca B",
+      "license": "CC0",
+      "url": "https://polyhaven.com/a/worn_metal_rack"
+    }
+  ]
+}
