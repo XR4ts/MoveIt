@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3462490387240520159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8917606694421800756}
+  - component: {fileID: 6492409025191453425}
+  - component: {fileID: 4973136711549140846}
+  m_Layer: 0
+  m_Name: chinese_tea_table
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8917606694421800756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3462490387240520159}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7134945846422367142}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6492409025191453425
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3462490387240520159}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8413149, y: 0.49864104, z: 0.83562195}
+  m_Center: {x: 0, y: 0.24932052, z: 0}
+--- !u!114 &4973136711549140846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3462490387240520159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6569e67d64c42c59c8ab24dcd51ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoveIt.Furniture.FurnitureItem
+  m_Id: chinese_tea_table
+  m_DisplayName: Chinese Tea Table
+  m_Category: Tables
+  m_Attribution: Chinese Tea Table by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/chinese_tea_table
+--- !u!1001 &7769812057265605958
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8917606694421800756}
+    m_Modifications:
+    - target: {fileID: -8586251676745570592, guid: 9f3fc7241eb334aea90ec5e182033739, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0008903146
+      objectReference: {fileID: 0}
+    - target: {fileID: -8586251676745570592, guid: 9f3fc7241eb334aea90ec5e182033739, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8586251676745570592, guid: 9f3fc7241eb334aea90ec5e182033739, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0006194711
+      objectReference: {fileID: 0}
+    - target: {fileID: -8586251676745570592, guid: 9f3fc7241eb334aea90ec5e182033739, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8586251676745570592, guid: 9f3fc7241eb334aea90ec5e182033739, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8586251676745570592, guid: 9f3fc7241eb334aea90ec5e182033739, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8586251676745570592, guid: 9f3fc7241eb334aea90ec5e182033739, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8586251676745570592, guid: 9f3fc7241eb334aea90ec5e182033739, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8586251676745570592, guid: 9f3fc7241eb334aea90ec5e182033739, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8586251676745570592, guid: 9f3fc7241eb334aea90ec5e182033739, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8934552857613630600, guid: 9f3fc7241eb334aea90ec5e182033739, type: 3}
+      propertyPath: m_Name
+      value: Model
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: -4161369568681901532, guid: 9f3fc7241eb334aea90ec5e182033739, type: 3}
+--- !u!4 &7134945846422367142 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8586251676745570592, guid: 9f3fc7241eb334aea90ec5e182033739, type: 3}
+  m_PrefabInstance: {fileID: 7769812057265605958}
+  m_PrefabAsset: {fileID: 0}

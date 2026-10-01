@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7730694628325801769
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1911438860208912801}
+  - component: {fileID: 921965765864621117}
+  - component: {fileID: 2096605393275714892}
+  m_Layer: 0
+  m_Name: chinese_console_table
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1911438860208912801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7730694628325801769}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1979800934953637129}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &921965765864621117
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7730694628325801769}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.7196248, y: 0.66074216, z: 0.33879307}
+  m_Center: {x: 0, y: 0.33037108, z: 0}
+--- !u!114 &2096605393275714892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7730694628325801769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6569e67d64c42c59c8ab24dcd51ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoveIt.Furniture.FurnitureItem
+  m_Id: chinese_console_table
+  m_DisplayName: Chinese Console Table
+  m_Category: Tables
+  m_Attribution: Chinese Console Table by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/chinese_console_table
+--- !u!1001 &9205948499889646828
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1911438860208912801}
+    m_Modifications:
+    - target: {fileID: 766040059612248089, guid: eca8a30178bcd4617ad63e8dc58689cc, type: 3}
+      propertyPath: m_Name
+      value: Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 7258592137171941861, guid: eca8a30178bcd4617ad63e8dc58689cc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0009217262
+      objectReference: {fileID: 0}
+    - target: {fileID: 7258592137171941861, guid: eca8a30178bcd4617ad63e8dc58689cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00027796626
+      objectReference: {fileID: 0}
+    - target: {fileID: 7258592137171941861, guid: eca8a30178bcd4617ad63e8dc58689cc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00037105381
+      objectReference: {fileID: 0}
+    - target: {fileID: 7258592137171941861, guid: eca8a30178bcd4617ad63e8dc58689cc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7258592137171941861, guid: eca8a30178bcd4617ad63e8dc58689cc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7258592137171941861, guid: eca8a30178bcd4617ad63e8dc58689cc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7258592137171941861, guid: eca8a30178bcd4617ad63e8dc58689cc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7258592137171941861, guid: eca8a30178bcd4617ad63e8dc58689cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7258592137171941861, guid: eca8a30178bcd4617ad63e8dc58689cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7258592137171941861, guid: eca8a30178bcd4617ad63e8dc58689cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: -4161369568681901532, guid: eca8a30178bcd4617ad63e8dc58689cc, type: 3}
+--- !u!4 &1979800934953637129 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7258592137171941861, guid: eca8a30178bcd4617ad63e8dc58689cc, type: 3}
+  m_PrefabInstance: {fileID: 9205948499889646828}
+  m_PrefabAsset: {fileID: 0}

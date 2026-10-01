@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5765596346037912729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4483455794635144539}
+  - component: {fileID: 4157325486796937123}
+  - component: {fileID: 399401792142990879}
+  m_Layer: 0
+  m_Name: EKET_00333947_70x35x35
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4483455794635144539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5765596346037912729}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8059122159380548972}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4157325486796937123
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5765596346037912729}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7000001, y: 0.35000002, z: 0.36700013}
+  m_Center: {x: 0, y: 0.17500001, z: 0}
+--- !u!114 &399401792142990879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5765596346037912729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6569e67d64c42c59c8ab24dcd51ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoveIt.Furniture.FurnitureItem
+  m_Id: EKET_00333947_70x35x35
+  m_DisplayName: EKET cabinet with 2 drawers
+  m_Category: Storage
+  m_Attribution: EKET cabinet with 2 drawers by Inter IKEA Systems B.V. (IKEA), CC
+    BY-NC-SA 4.0, https://www.ikea.com/nl/en/p/eket-cabinet-with-2-drawers-white-00333947/
+--- !u!1001 &1513541523596507837
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4483455794635144539}
+    m_Modifications:
+    - target: {fileID: -4320558180572046448, guid: 15bec16cc621f42849c4752665719cb6, type: 3}
+      propertyPath: m_Name
+      value: Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851522807220058065, guid: 15bec16cc621f42849c4752665719cb6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0006928444
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851522807220058065, guid: 15bec16cc621f42849c4752665719cb6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0012783557
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851522807220058065, guid: 15bec16cc621f42849c4752665719cb6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.00071667135
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851522807220058065, guid: 15bec16cc621f42849c4752665719cb6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851522807220058065, guid: 15bec16cc621f42849c4752665719cb6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851522807220058065, guid: 15bec16cc621f42849c4752665719cb6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851522807220058065, guid: 15bec16cc621f42849c4752665719cb6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851522807220058065, guid: 15bec16cc621f42849c4752665719cb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851522807220058065, guid: 15bec16cc621f42849c4752665719cb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851522807220058065, guid: 15bec16cc621f42849c4752665719cb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 3150474306388093854, guid: 15bec16cc621f42849c4752665719cb6, type: 3}
+--- !u!4 &8059122159380548972 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8851522807220058065, guid: 15bec16cc621f42849c4752665719cb6, type: 3}
+  m_PrefabInstance: {fileID: 1513541523596507837}
+  m_PrefabAsset: {fileID: 0}
