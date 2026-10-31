@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Tool Cart
   m_Category: Storage
   m_Attribution: Tool Cart by Savva Zakharov (PolyHaven), CC0, https://polyhaven.com/a/tool_cart
+  m_Thumbnail: {fileID: 21300000, guid: ce0a163e664158e41ade68b236dfd831, type: 3}
 --- !u!1001 &4010630731044957885
 PrefabInstance:
   m_ObjectHideFlags: 0

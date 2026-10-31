@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Dining Table
   m_Category: Tables
   m_Attribution: "Dining Table by Aron \u0141yczek (PolyHaven), CC0, https://polyhaven.com/a/dining_table"
+  m_Thumbnail: {fileID: 21300000, guid: 2bf4c36c2b32e344f9f29ad0a6c086e5, type: 3}
 --- !u!1001 &8334428852693294808
 PrefabInstance:
   m_ObjectHideFlags: 0

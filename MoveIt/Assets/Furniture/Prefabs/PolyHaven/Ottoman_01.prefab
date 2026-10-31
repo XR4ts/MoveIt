@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Ottoman 01
   m_Category: Seating
   m_Attribution: Ottoman 01 by Caspian Fortune (PolyHaven), CC0, https://polyhaven.com/a/Ottoman_01
+  m_Thumbnail: {fileID: 21300000, guid: c3564f66d6fb08a4c92cda74828f3f13, type: 3}
 --- !u!1001 &8248006429958937817
 PrefabInstance:
   m_ObjectHideFlags: 0

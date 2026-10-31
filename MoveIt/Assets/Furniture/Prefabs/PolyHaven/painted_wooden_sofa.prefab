@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Painted Wooden Sofa
   m_Category: Seating
   m_Attribution: Painted Wooden Sofa by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/painted_wooden_sofa
+  m_Thumbnail: {fileID: 21300000, guid: c321e18dbf22b5847918030533cd4560, type: 3}
 --- !u!1001 &8656150013285510476
 PrefabInstance:
   m_ObjectHideFlags: 0

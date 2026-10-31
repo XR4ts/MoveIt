@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Wooden Picnic Table
   m_Category: Tables
   m_Attribution: Wooden Picnic Table by Ulan Cabanilla (PolyHaven), CC0, https://polyhaven.com/a/wooden_picnic_table
+  m_Thumbnail: {fileID: 21300000, guid: 9d282d0a75eb00446aa225d3a2549869, type: 3}
 --- !u!1001 &7900665553263220582
 PrefabInstance:
   m_ObjectHideFlags: 0

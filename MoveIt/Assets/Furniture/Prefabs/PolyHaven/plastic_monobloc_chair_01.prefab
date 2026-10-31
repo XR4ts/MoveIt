@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Plastic Monobloc Chair 01
   m_Category: Seating
   m_Attribution: Plastic Monobloc Chair 01 by Kuutti Siitonen (PolyHaven), CC0, https://polyhaven.com/a/plastic_monobloc_chair_01
+  m_Thumbnail: {fileID: 21300000, guid: 6b3510bfa44002c4986656acc25438c9, type: 3}
 --- !u!1001 &1049455454000955276
 PrefabInstance:
   m_ObjectHideFlags: 0

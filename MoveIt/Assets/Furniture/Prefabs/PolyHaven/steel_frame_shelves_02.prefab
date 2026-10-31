@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Steel Frame Shelves 02
   m_Category: Storage
   m_Attribution: Steel Frame Shelves 02 by James Ray Cock (PolyHaven), CC0, https://polyhaven.com/a/steel_frame_shelves_02
+  m_Thumbnail: {fileID: 21300000, guid: 05515ab47c66afb4dbf448b0ac677083, type: 3}
 --- !u!1001 &4844664013743790503
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Side Table 01
   m_Category: Tables
   m_Attribution: Side Table 01 by James Ray Cock (PolyHaven), CC0, https://polyhaven.com/a/side_table_01
+  m_Thumbnail: {fileID: 21300000, guid: d0078c4131243704889d5e9ea128ca7b, type: 3}
 --- !u!1001 &4529858161615702311
 PrefabInstance:
   m_ObjectHideFlags: 0

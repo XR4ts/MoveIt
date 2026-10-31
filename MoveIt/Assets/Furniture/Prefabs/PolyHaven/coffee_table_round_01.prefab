@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Coffee Table Round 01
   m_Category: Tables
   m_Attribution: Coffee Table Round 01 by Ulan Cabanilla (PolyHaven), CC0, https://polyhaven.com/a/coffee_table_round_01
+  m_Thumbnail: {fileID: 21300000, guid: 84ffa235fde813444b588e599e431179, type: 3}
 --- !u!1001 &6946791658949559858
 PrefabInstance:
   m_ObjectHideFlags: 0

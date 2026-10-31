@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Arm Chair 01
   m_Category: Seating
   m_Attribution: Arm Chair 01 by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/ArmChair_01
+  m_Thumbnail: {fileID: 21300000, guid: 983b8876f23fc23449a75ae35fff1264, type: 3}
 --- !u!1001 &4788038079385629783
 PrefabInstance:
   m_ObjectHideFlags: 0

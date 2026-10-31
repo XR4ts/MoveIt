@@ -255,6 +255,7 @@ MonoBehaviour:
   m_Category: Storage
   m_Attribution: EKET cabinet with 2 drawers by Inter IKEA Systems B.V. (IKEA), CC
     BY-NC-SA 4.0, https://www.ikea.com/nl/en/p/eket-cabinet-with-2-drawers-white-00333947/
+  m_Thumbnail: {fileID: 21300000, guid: 189ad17116aabda43a061c0fd8404d51, type: 3}
 --- !u!1001 &1513541523596507837
 PrefabInstance:
   m_ObjectHideFlags: 0

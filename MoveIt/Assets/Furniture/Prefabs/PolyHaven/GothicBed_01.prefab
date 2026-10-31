@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Gothic Bed 01
   m_Category: Beds
   m_Attribution: Gothic Bed 01 by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/GothicBed_01
+  m_Thumbnail: {fileID: 21300000, guid: 3b51ae8f46ca03943a715365264e56e5, type: 3}
 --- !u!1001 &8956423417678867740
 PrefabInstance:
   m_ObjectHideFlags: 0

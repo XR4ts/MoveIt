@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Stone Fire Pit
   m_Category: Outdoor Structures
   m_Attribution: Stone Fire Pit by Sebastian Platen (PolyHaven), CC0, https://polyhaven.com/a/stone_fire_pit
+  m_Thumbnail: {fileID: 21300000, guid: 9067b9d089083654387cff745088116b, type: 3}
 --- !u!1001 &7312453053220336884
 PrefabInstance:
   m_ObjectHideFlags: 0

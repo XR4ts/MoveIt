@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Coffee Table 01
   m_Category: Tables
   m_Attribution: Coffee Table 01 by Fernando Quinn (PolyHaven), CC0, https://polyhaven.com/a/CoffeeTable_01
+  m_Thumbnail: {fileID: 21300000, guid: 59aeb2df8a9a99f4eb64aedeb0ac4744, type: 3}
 --- !u!1001 &4059179798170280369
 PrefabInstance:
   m_ObjectHideFlags: 0

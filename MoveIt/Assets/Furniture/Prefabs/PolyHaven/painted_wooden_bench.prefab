@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Painted Wooden Bench
   m_Category: Seating
   m_Attribution: Painted Wooden Bench by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/painted_wooden_bench
+  m_Thumbnail: {fileID: 21300000, guid: 3dc0fc080238eec499a74fe6a1118e73, type: 3}
 --- !u!1001 &3567001794091530605
 PrefabInstance:
   m_ObjectHideFlags: 0

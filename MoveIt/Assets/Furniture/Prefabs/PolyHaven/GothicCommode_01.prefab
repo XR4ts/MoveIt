@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Gothic Commode 01
   m_Category: Storage
   m_Attribution: Gothic Commode 01 by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/GothicCommode_01
+  m_Thumbnail: {fileID: 21300000, guid: 35fac6d61800f3a4fbed01996f1b8a9e, type: 3}
 --- !u!1001 &5230268595324517160
 PrefabInstance:
   m_ObjectHideFlags: 0

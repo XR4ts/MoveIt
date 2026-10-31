@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Metal Stool 03
   m_Category: Seating
   m_Attribution: Metal Stool 03 by Flo Tasser (PolyHaven), CC0, https://polyhaven.com/a/metal_stool_03
+  m_Thumbnail: {fileID: 21300000, guid: 8ba768afad2775f4781c2ea371c88fd5, type: 3}
 --- !u!1001 &5607700180896234757
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Coffee Cart 01
   m_Category: Storage
   m_Attribution: Coffee Cart 01 by Joe Seabuhr (PolyHaven), CC0, https://polyhaven.com/a/CoffeeCart_01
+  m_Thumbnail: {fileID: 21300000, guid: 3d5696019f2992542a518885bf1e53ac, type: 3}
 --- !u!1001 &7314117435204104777
 PrefabInstance:
   m_ObjectHideFlags: 0

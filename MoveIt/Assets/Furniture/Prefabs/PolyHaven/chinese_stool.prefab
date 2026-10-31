@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Chinese Stool
   m_Category: Seating
   m_Attribution: Chinese Stool by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/chinese_stool
+  m_Thumbnail: {fileID: 21300000, guid: 91ca039ff36af6647997166735a0e3ab, type: 3}
 --- !u!1001 &4434044363457910091
 PrefabInstance:
   m_ObjectHideFlags: 0

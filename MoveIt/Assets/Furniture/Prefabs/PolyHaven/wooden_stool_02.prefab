@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Wooden Stool 02
   m_Category: Seating
   m_Attribution: Wooden Stool 02 by Kuutti Siitonen (PolyHaven), CC0, https://polyhaven.com/a/wooden_stool_02
+  m_Thumbnail: {fileID: 21300000, guid: d0f7dbb721a63324fbbe2f9160518f89, type: 3}
 --- !u!1001 &8934990840743896860
 PrefabInstance:
   m_ObjectHideFlags: 0

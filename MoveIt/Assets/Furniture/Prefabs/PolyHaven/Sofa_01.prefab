@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Sofa 01
   m_Category: Seating
   m_Attribution: Sofa 01 by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/Sofa_01
+  m_Thumbnail: {fileID: 21300000, guid: 106310d342e343a47b9f51a5f48436ce, type: 3}
 --- !u!1001 &5823733319150291936
 PrefabInstance:
   m_ObjectHideFlags: 0

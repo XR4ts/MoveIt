@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Wooden Table 01
   m_Category: Tables
   m_Attribution: Wooden Table 01 by Ethan Place (PolyHaven), CC0, https://polyhaven.com/a/WoodenTable_01
+  m_Thumbnail: {fileID: 21300000, guid: 0430925be10c3444b992e3654bccd073, type: 3}
 --- !u!1001 &20673687875423560
 PrefabInstance:
   m_ObjectHideFlags: 0

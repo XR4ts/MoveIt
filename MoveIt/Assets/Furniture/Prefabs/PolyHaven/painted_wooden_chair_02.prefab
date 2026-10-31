@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Painted Wooden Chair 02
   m_Category: Seating
   m_Attribution: Painted Wooden Chair 02 by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/painted_wooden_chair_02
+  m_Thumbnail: {fileID: 21300000, guid: bd695a0627a25a74084aad1b8db08de7, type: 3}
 --- !u!1001 &6702740187606511743
 PrefabInstance:
   m_ObjectHideFlags: 0

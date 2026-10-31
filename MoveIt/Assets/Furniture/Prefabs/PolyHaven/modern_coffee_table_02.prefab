@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Modern Coffee Table 02
   m_Category: Tables
   m_Attribution: Modern Coffee Table 02 by Amin (PolyHaven), CC0, https://polyhaven.com/a/modern_coffee_table_02
+  m_Thumbnail: {fileID: 21300000, guid: 2f8ad00c0d15e2e478662783e12f661b, type: 3}
 --- !u!1001 &8054657564821178570
 PrefabInstance:
   m_ObjectHideFlags: 0

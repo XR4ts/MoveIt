@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Gothic Coffee Table
   m_Category: Tables
   m_Attribution: Gothic Coffee Table by Ulan Cabanilla (PolyHaven), CC0, https://polyhaven.com/a/gothic_coffee_table
+  m_Thumbnail: {fileID: 21300000, guid: 5b3c7b8b664dc444aba5c4bed71bc050, type: 3}
 --- !u!1001 &6782319516050006149
 PrefabInstance:
   m_ObjectHideFlags: 0

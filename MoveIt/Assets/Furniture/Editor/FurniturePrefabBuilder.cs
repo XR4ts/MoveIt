@@ -11,6 +11,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Transformers;
 using Object = UnityEngine.Object;
 
+
 namespace MoveIt.Furniture.Editor
 {
     /// <summary>
@@ -23,6 +24,13 @@ namespace MoveIt.Furniture.Editor
         const string k_Root = "Assets/Furniture";
         const string k_SourcesPath = k_Root + "/FurnitureSources.json";
         const string k_CatalogPath = k_Root + "/FurnitureCatalog.asset";
+
+        static Queue<FurnitureItem> s_ThumbnailQueue;
+        static FurnitureItem s_CurrentThumbnailItem;
+        static int s_ThumbnailAttempts;
+
+        const int k_MaxThumbnailAttempts = 300;
+        const int k_ThumbnailResolution = 256;
 
         [Serializable]
         class Source
@@ -99,6 +107,9 @@ namespace MoveIt.Furniture.Editor
             UpdateCatalog(built);
             AssetDatabase.SaveAssets();
 
+            // Generates thumbnails after all prefabs have been saved.
+            QueueThumbnailGeneration(built);
+
             Debug.Log(
                 $"Built {built.Count} furniture prefabs." +
                 (skipped.Count > 0
@@ -149,12 +160,13 @@ namespace MoveIt.Furniture.Editor
 
                 // Preserve furniture catalog metadata.
                 var item = root.AddComponent<FurnitureItem>();
+
                 item.Initialize(
                     source.id,
                     source.displayName,
                     source.category,
-                    $"{source.displayName} by {source.author} " +
-                    $"({source.source}), {source.license}, {source.url}");
+                    $"{source.displayName} by {source.author} ({source.source}), {source.license}, {source.url}");
+
 
                 var folder = $"{k_Root}/Prefabs/{source.source}";
                 Directory.CreateDirectory(folder);
@@ -240,5 +252,133 @@ namespace MoveIt.Furniture.Editor
 
             EditorUtility.SetDirty(catalog);
         }
+
+
+        static void QueueThumbnailGeneration(List<FurnitureItem> items)
+        {
+            s_ThumbnailQueue = new Queue<FurnitureItem>(items);
+            s_CurrentThumbnailItem = null;
+            s_ThumbnailAttempts = 0;
+
+            EditorApplication.update -= GenerateNextThumbnail;
+            EditorApplication.update += GenerateNextThumbnail;
+
+            Debug.Log($"Queued {items.Count} furniture thumbnails.");
+        }
+
+        static void GenerateNextThumbnail()
+        {
+            if (s_CurrentThumbnailItem == null)
+            {
+                if (s_ThumbnailQueue == null || s_ThumbnailQueue.Count == 0)
+                {
+                    EditorApplication.update -= GenerateNextThumbnail;
+
+                    AssetDatabase.SaveAssets();
+
+                    Debug.Log("Furniture thumbnail generation completed.");
+                    return;
+                }
+
+                s_CurrentThumbnailItem = s_ThumbnailQueue.Dequeue();
+                s_ThumbnailAttempts = 0;
+            }
+
+            var item = s_CurrentThumbnailItem;
+
+            if (item == null)
+            {
+                s_CurrentThumbnailItem = null;
+                return;
+            }
+
+            // Request Unity's own prefab preview.
+            var preview = AssetPreview.GetAssetPreview(item.gameObject);
+
+            if (preview == null)
+            {
+                s_ThumbnailAttempts++;
+
+                if (s_ThumbnailAttempts >= k_MaxThumbnailAttempts)
+                {
+                    Debug.LogWarning(
+                        $"Could not generate preview for {item.displayName}. Skipping.");
+
+                    s_CurrentThumbnailItem = null;
+                }
+
+                return;
+            }
+
+            SaveThumbnail(item, preview);
+
+            s_CurrentThumbnailItem = null;
+        }
+
+        static void SaveThumbnail(FurnitureItem item, Texture2D preview)
+        {
+            var folder = $"{k_Root}/Thumbnails";
+
+            Directory.CreateDirectory(folder);
+
+            var imagePath = $"{folder}/{item.id}.png";
+
+            File.WriteAllBytes(imagePath, preview.EncodeToPNG());
+
+            AssetDatabase.ImportAsset(
+                imagePath,
+                ImportAssetOptions.ForceUpdate);
+
+            var importer = AssetImporter.GetAtPath(imagePath) as TextureImporter;
+
+            if (importer == null)
+            {
+                Debug.LogError($"Could not import thumbnail: {imagePath}");
+                return;
+            }
+
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Single;
+            importer.maxTextureSize = k_ThumbnailResolution;
+            importer.SaveAndReimport();
+
+            var thumbnail = AssetDatabase.LoadAssetAtPath<Sprite>(imagePath);
+
+            if (thumbnail == null)
+            {
+                Debug.LogError($"Could not load thumbnail sprite: {imagePath}");
+                return;
+            }
+
+            // Update the saved prefab's FurnitureItem component.
+            var prefabPath = AssetDatabase.GetAssetPath(item.gameObject);
+
+            var prefabContents = PrefabUtility.LoadPrefabContents(prefabPath);
+
+            try
+            {
+                var prefabItem = prefabContents.GetComponent<FurnitureItem>();
+
+                if (prefabItem == null)
+                {
+                    Debug.LogError($"FurnitureItem missing from {prefabPath}");
+                    return;
+                }
+
+                prefabItem.SetThumbnail(thumbnail);
+
+                PrefabUtility.SaveAsPrefabAsset(
+                    prefabContents,
+                    prefabPath);
+            }
+            finally
+            {
+                PrefabUtility.UnloadPrefabContents(prefabContents);
+            }
+
+            Debug.Log($"Generated thumbnail for {item.displayName}");
+        }
+
+
     }
 }

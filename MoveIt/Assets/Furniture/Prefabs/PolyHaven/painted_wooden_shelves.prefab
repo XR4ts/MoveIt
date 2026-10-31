@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Painted Wooden Shelves
   m_Category: Storage
   m_Attribution: Painted Wooden Shelves by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/painted_wooden_shelves
+  m_Thumbnail: {fileID: 21300000, guid: 79a0efbc4eed694419450b4039f2cc9c, type: 3}
 --- !u!1001 &2028770709323121710
 PrefabInstance:
   m_ObjectHideFlags: 0

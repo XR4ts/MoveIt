@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Side Table Tall 01
   m_Category: Tables
   m_Attribution: Side Table Tall 01 by James Ray Cock (PolyHaven), CC0, https://polyhaven.com/a/side_table_tall_01
+  m_Thumbnail: {fileID: 21300000, guid: ee9b20388c10c644d91ae5aa0222cbcf, type: 3}
 --- !u!1001 &632474177176933673
 PrefabInstance:
   m_ObjectHideFlags: 0

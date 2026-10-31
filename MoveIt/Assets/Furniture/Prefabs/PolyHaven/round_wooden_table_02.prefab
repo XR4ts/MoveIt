@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Round Wooden Table 02
   m_Category: Tables
   m_Attribution: Round Wooden Table 02 by Ulan Cabanilla (PolyHaven), CC0, https://polyhaven.com/a/round_wooden_table_02
+  m_Thumbnail: {fileID: 21300000, guid: 0eb99229c24e4e94cb39fb7bbce4bf1e, type: 3}
 --- !u!1001 &5055123134785926464
 PrefabInstance:
   m_ObjectHideFlags: 0

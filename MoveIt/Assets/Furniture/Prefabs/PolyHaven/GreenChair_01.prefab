@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Green Chair 01
   m_Category: Seating
   m_Attribution: Green Chair 01 by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/GreenChair_01
+  m_Thumbnail: {fileID: 21300000, guid: bda22f6cca6683442ab3ffbd2f004bac, type: 3}
 --- !u!1001 &4032324897455104995
 PrefabInstance:
   m_ObjectHideFlags: 0

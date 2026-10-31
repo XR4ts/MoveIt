@@ -255,6 +255,7 @@ MonoBehaviour:
   m_Category: Seating
   m_Attribution: "BEKV\xC4M step stool (EU) by Inter IKEA Systems B.V. (IKEA), CC
     BY-NC-SA 4.0, https://www.ikea.com/nl/en/p/bekvaem-step-stool-black-40463852/"
+  m_Thumbnail: {fileID: 21300000, guid: e402ab9fd7291c64f885edc8df136b29, type: 3}
 --- !u!1001 &2440033744068331468
 PrefabInstance:
   m_ObjectHideFlags: 0

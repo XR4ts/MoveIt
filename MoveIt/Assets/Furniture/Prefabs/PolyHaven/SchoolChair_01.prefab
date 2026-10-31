@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: School Chair 01
   m_Category: Seating
   m_Attribution: School Chair 01 by Ethan Place (PolyHaven), CC0, https://polyhaven.com/a/SchoolChair_01
+  m_Thumbnail: {fileID: 21300000, guid: d9624f72439e20d4bba9ecda0c6bf991, type: 3}
 --- !u!1001 &4535000122068498372
 PrefabInstance:
   m_ObjectHideFlags: 0

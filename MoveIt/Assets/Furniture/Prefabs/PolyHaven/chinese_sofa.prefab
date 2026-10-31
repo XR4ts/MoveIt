@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Chinese Sofa
   m_Category: Seating
   m_Attribution: Chinese Sofa by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/chinese_sofa
+  m_Thumbnail: {fileID: 21300000, guid: bd3d4c0862fef5c4d9a6615b890f9f62, type: 3}
 --- !u!1001 &3478228334836528500
 PrefabInstance:
   m_ObjectHideFlags: 0

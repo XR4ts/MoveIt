@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Metal Stool 01
   m_Category: Seating
   m_Attribution: Metal Stool 01 by Ulan Cabanilla (PolyHaven), CC0, https://polyhaven.com/a/metal_stool_01
+  m_Thumbnail: {fileID: 21300000, guid: a32d9c86e9a0d2c4caeaf21399c4d55d, type: 3}
 --- !u!1001 &3467906332571313060
 PrefabInstance:
   m_ObjectHideFlags: 0

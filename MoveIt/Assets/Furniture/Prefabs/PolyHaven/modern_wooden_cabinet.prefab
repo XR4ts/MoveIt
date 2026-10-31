@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Modern Wooden Cabinet
   m_Category: Storage
   m_Attribution: Modern Wooden Cabinet by Patrik Pangerl (PolyHaven), CC0, https://polyhaven.com/a/modern_wooden_cabinet
+  m_Thumbnail: {fileID: 21300000, guid: f42cadc774769cc4ea4be01fcd1d883f, type: 3}
 --- !u!1001 &5998069181012479220
 PrefabInstance:
   m_ObjectHideFlags: 0

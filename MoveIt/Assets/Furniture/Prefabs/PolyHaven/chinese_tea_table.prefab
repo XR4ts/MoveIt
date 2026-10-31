@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Chinese Tea Table
   m_Category: Tables
   m_Attribution: Chinese Tea Table by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/chinese_tea_table
+  m_Thumbnail: {fileID: 21300000, guid: bd9d35c32ac814543ab63a730bf6d00a, type: 3}
 --- !u!1001 &7769812057265605958
 PrefabInstance:
   m_ObjectHideFlags: 0

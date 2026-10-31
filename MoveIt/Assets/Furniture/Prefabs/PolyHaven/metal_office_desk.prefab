@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Metal Office Desk
   m_Category: Tables
   m_Attribution: Metal Office Desk by Ulan Cabanilla (PolyHaven), CC0, https://polyhaven.com/a/metal_office_desk
+  m_Thumbnail: {fileID: 21300000, guid: 48bd721ee62545c4894e9393e949d553, type: 3}
 --- !u!1001 &4195499559556379472
 PrefabInstance:
   m_ObjectHideFlags: 0

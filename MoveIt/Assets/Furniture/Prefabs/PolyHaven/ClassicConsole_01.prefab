@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Classic Console 01
   m_Category: Tables
   m_Attribution: Classic Console 01 by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/ClassicConsole_01
+  m_Thumbnail: {fileID: 21300000, guid: 4ada1e09d01cc254a9d80a378888c43e, type: 3}
 --- !u!1001 &2221291160401301837
 PrefabInstance:
   m_ObjectHideFlags: 0

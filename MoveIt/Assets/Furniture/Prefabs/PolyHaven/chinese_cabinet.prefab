@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Chinese Cabinet
   m_Category: Storage
   m_Attribution: Chinese Cabinet by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/chinese_cabinet
+  m_Thumbnail: {fileID: 21300000, guid: fe81bc5753d543242b2f7a4c95451f63, type: 3}
 --- !u!1001 &8577330763052966483
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Classic Nightstand 01
   m_Category: Tables
   m_Attribution: Classic Nightstand 01 by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/ClassicNightstand_01
+  m_Thumbnail: {fileID: 21300000, guid: 452a3b5e1c5022b4ab81da8fe67c6d7a, type: 3}
 --- !u!1001 &477631746763601662
 PrefabInstance:
   m_ObjectHideFlags: 0

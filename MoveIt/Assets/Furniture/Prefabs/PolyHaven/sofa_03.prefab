@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Sofa 03
   m_Category: Seating
   m_Attribution: Sofa 03 by Fran Calvente (PolyHaven), CC0, https://polyhaven.com/a/sofa_03
+  m_Thumbnail: {fileID: 21300000, guid: ec419c34bd69ecf438bfea2b9ff95def, type: 3}
 --- !u!1001 &6233264572120123306
 PrefabInstance:
   m_ObjectHideFlags: 0

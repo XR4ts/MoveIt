@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Steel Frame Shelves 03
   m_Category: Storage
   m_Attribution: Steel Frame Shelves 03 by Ulan Cabanilla (PolyHaven), CC0, https://polyhaven.com/a/steel_frame_shelves_03
+  m_Thumbnail: {fileID: 21300000, guid: 4e4bce1cd4b2926479933576ae1ccc54, type: 3}
 --- !u!1001 &488930363441598794
 PrefabInstance:
   m_ObjectHideFlags: 0

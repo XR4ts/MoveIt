@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Vintage Cabinet 01
   m_Category: Storage
   m_Attribution: Vintage Cabinet 01 by Rico Cilliers (PolyHaven), CC0, https://polyhaven.com/a/vintage_cabinet_01
+  m_Thumbnail: {fileID: 21300000, guid: 61e35afa4a204554b87fc7b2ec1aa730, type: 3}
 --- !u!1001 &4595319713128110575
 PrefabInstance:
   m_ObjectHideFlags: 0

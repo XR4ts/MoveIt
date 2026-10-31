@@ -255,6 +255,7 @@ MonoBehaviour:
   m_Category: Seating
   m_Attribution: DALFRED bar stool by Inter IKEA Systems B.V. (IKEA), CC BY-NC-SA
     4.0, https://www.ikea.com/nl/en/p/dalfred-bar-stool-black-60155602/
+  m_Thumbnail: {fileID: 21300000, guid: cfd0f2d9f4919c644aeb10b3f0f7e303, type: 3}
 --- !u!1001 &8865054121900088674
 PrefabInstance:
   m_ObjectHideFlags: 0

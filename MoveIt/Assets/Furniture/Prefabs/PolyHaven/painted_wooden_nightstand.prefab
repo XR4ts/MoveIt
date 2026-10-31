@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Painted Wooden Nightstand
   m_Category: Tables
   m_Attribution: Painted Wooden Nightstand by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/painted_wooden_nightstand
+  m_Thumbnail: {fileID: 21300000, guid: caf6043e17608a346bbd5b86cd354290, type: 3}
 --- !u!1001 &5833587151166384130
 PrefabInstance:
   m_ObjectHideFlags: 0

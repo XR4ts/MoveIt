@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Worn Metal Rack
   m_Category: Storage
   m_Attribution: Worn Metal Rack by Luca B (PolyHaven), CC0, https://polyhaven.com/a/worn_metal_rack
+  m_Thumbnail: {fileID: 21300000, guid: d6d79502caf293f40ba7f56403b3d2e5, type: 3}
 --- !u!1001 &6224221621230663673
 PrefabInstance:
   m_ObjectHideFlags: 0

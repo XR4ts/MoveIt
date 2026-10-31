@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Painted Wooden Stool
   m_Category: Seating
   m_Attribution: Painted Wooden Stool by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/painted_wooden_stool
+  m_Thumbnail: {fileID: 21300000, guid: 93bb3fc2da74b3c419f933afafeaccd1, type: 3}
 --- !u!1001 &3822005209629392044
 PrefabInstance:
   m_ObjectHideFlags: 0

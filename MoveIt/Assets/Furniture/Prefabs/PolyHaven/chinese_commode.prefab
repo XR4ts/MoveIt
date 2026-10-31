@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Chinese Commode
   m_Category: Storage
   m_Attribution: Chinese Commode by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/chinese_commode
+  m_Thumbnail: {fileID: 21300000, guid: d337151d43c13f845af1f2ec219f52cb, type: 3}
 --- !u!1001 &366317255266219017
 PrefabInstance:
   m_ObjectHideFlags: 0

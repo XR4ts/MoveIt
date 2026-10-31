@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Gothic Cabinet 01
   m_Category: Storage
   m_Attribution: Gothic Cabinet 01 by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/GothicCabinet_01
+  m_Thumbnail: {fileID: 21300000, guid: 95ff1791b9bf22041b11ccb4273a0bcc, type: 3}
 --- !u!1001 &7530593543515171959
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Wooden Table 02
   m_Category: Tables
   m_Attribution: Wooden Table 02 by Serhii Khromov (PolyHaven), CC0, https://polyhaven.com/a/wooden_table_02
+  m_Thumbnail: {fileID: 21300000, guid: cec6aee8467405f45b0b0e35973cef99, type: 3}
 --- !u!1001 &39705203330142607
 PrefabInstance:
   m_ObjectHideFlags: 0

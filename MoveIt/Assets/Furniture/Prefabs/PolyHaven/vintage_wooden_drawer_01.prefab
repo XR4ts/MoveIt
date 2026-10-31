@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Vintage Wooden Drawer 01
   m_Category: Storage
   m_Attribution: Vintage Wooden Drawer 01 by James Ray Cock (PolyHaven), CC0, https://polyhaven.com/a/vintage_wooden_drawer_01
+  m_Thumbnail: {fileID: 21300000, guid: 557d51e81cf48d14e910735c75de87a4, type: 3}
 --- !u!1001 &7094183303311163043
 PrefabInstance:
   m_ObjectHideFlags: 0

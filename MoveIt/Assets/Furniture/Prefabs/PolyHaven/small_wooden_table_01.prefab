@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Small Wooden Table 01
   m_Category: Tables
   m_Attribution: Small Wooden Table 01 by Ulan Cabanilla (PolyHaven), CC0, https://polyhaven.com/a/small_wooden_table_01
+  m_Thumbnail: {fileID: 21300000, guid: f4a153ac810c6a745afabe3b03a4dee1, type: 3}
 --- !u!1001 &4170117308002162832
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Drawer Cabinet
   m_Category: Storage
   m_Attribution: Drawer Cabinet by Ulan Cabanilla (PolyHaven), CC0, https://polyhaven.com/a/drawer_cabinet
+  m_Thumbnail: {fileID: 21300000, guid: b19f9e48dc15c2c48846d0bd9557f4c5, type: 3}
 --- !u!1001 &7121516131598072029
 PrefabInstance:
   m_ObjectHideFlags: 0

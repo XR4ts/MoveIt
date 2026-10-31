@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Painted Wooden Cabinet 02
   m_Category: Storage
   m_Attribution: Painted Wooden Cabinet 02 by Kirill Sannikov (PolyHaven), CC0, https://polyhaven.com/a/painted_wooden_cabinet_02
+  m_Thumbnail: {fileID: 21300000, guid: 15865c9666060d74c9cb4883dbcc2780, type: 3}
 --- !u!1001 &488234678160275687
 PrefabInstance:
   m_ObjectHideFlags: 0

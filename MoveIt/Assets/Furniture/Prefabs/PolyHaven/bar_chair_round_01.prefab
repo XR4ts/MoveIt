@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Bar Chair Round 01
   m_Category: Seating
   m_Attribution: Bar Chair Round 01 by Dairon Sanchez (PolyHaven), CC0, https://polyhaven.com/a/bar_chair_round_01
+  m_Thumbnail: {fileID: 21300000, guid: 6ae43fe8f6040b44f8ccf99634476720, type: 3}
 --- !u!1001 &5164802202030898908
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Wooden Bookshelf Worn
   m_Category: Storage
   m_Attribution: Wooden Bookshelf Worn by Ulan Cabanilla (PolyHaven), CC0, https://polyhaven.com/a/wooden_bookshelf_worn
+  m_Thumbnail: {fileID: 21300000, guid: 564133351900d614d9d079208c96a006, type: 3}
 --- !u!1001 &7826704060571762805
 PrefabInstance:
   m_ObjectHideFlags: 0

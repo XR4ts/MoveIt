@@ -254,6 +254,7 @@ MonoBehaviour:
   m_DisplayName: Gallinera Chair
   m_Category: Seating
   m_Attribution: Gallinera Chair by Ulan Cabanilla (PolyHaven), CC0, https://polyhaven.com/a/gallinera_chair
+  m_Thumbnail: {fileID: 21300000, guid: 1535115585c04934d8c00c96ab7f4f1c, type: 3}
 --- !u!1001 &5192656708709822627
 PrefabInstance:
   m_ObjectHideFlags: 0
