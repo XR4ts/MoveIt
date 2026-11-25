@@ -123,6 +123,9 @@ namespace MoveIt.AR
 
             if (FindAnyObjectByType<SurfaceDots>() == null)
                 features.AddComponent<SurfaceDots>();
+
+            if (FindAnyObjectByType<FloorShadows>() == null)
+                features.AddComponent<FloorShadows>();
         }
     }
 }
