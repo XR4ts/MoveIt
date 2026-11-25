@@ -27,6 +27,7 @@ namespace MoveIt.AR.Harness
         string m_Scenario;
         string m_Target;
         bool m_QuickScan;
+        bool m_SpawnStool;
         Camera m_Camera;
         RenderTexture m_RenderTarget;
         Transform m_PoseProvider;
@@ -48,6 +49,7 @@ namespace MoveIt.AR.Harness
             driver.m_Scenario = Arg(args, "-moveitScenario") ?? "discover";
             driver.m_Target = Arg(args, "-moveitTarget") ?? "table";
             driver.m_QuickScan = Arg(args, "-moveitScan") == "quick";
+            driver.m_SpawnStool = Array.IndexOf(args, "-moveitStool") >= 0;
             DontDestroyOnLoad(driver.gameObject);
         }
 
@@ -205,6 +207,9 @@ namespace MoveIt.AR.Harness
 
         IEnumerator EraseScenario()
         {
+            if (m_SpawnStool)
+                SpawnTestStool();
+
             DumpEnvironment();
             yield return Scan();
 
@@ -220,12 +225,22 @@ namespace MoveIt.AR.Harness
 
             Log($"target {target.name} bounds {target.bounds.center} size {target.bounds.size}");
 
-            // Look at the object from the room side, at standing height.
+            // Look at the object from the room side, at standing height. For the test stool, aim at its middle.
             var center = target.bounds.center;
+            if (target.name.StartsWith("TestStool"))
+                center = target.transform.parent.position + Vector3.up * 0.3f;
             var fromRoom = RoomCenter() - center;
             fromRoom.y = 0f;
             fromRoom = fromRoom.sqrMagnitude > 0.01f ? fromRoom.normalized : Vector3.back;
-            var eye = center + fromRoom * 2.3f;
+            var viewDistance = 2.3f;
+            if (target.name.StartsWith("TestStool"))
+            {
+                // Free-standing in the middle of the room: look from the open side.
+                fromRoom = Vector3.forward;
+                viewDistance = 1.6f;
+            }
+
+            var eye = center + fromRoom * viewDistance;
             eye.y = 1.45f;
             LookFrom(eye, center);
 
@@ -253,9 +268,27 @@ namespace MoveIt.AR.Harness
             yield return Frames(5);
             yield return Shot("erase-2-fitted");
 
+            // The preview while adjusting is the clean (inpainted) fill, a few seconds after the fit.
+            var previewWait = Time.realtimeSinceStartup + 60f;
+            var previewStart = Time.realtimeSinceStartup;
+            while (eraser.isInpainting && Time.realtimeSinceStartup < previewWait)
+                yield return null;
+            Log($"preview took {Time.realtimeSinceStartup - previewStart:0.0} s");
+            yield return Frames(5);
+            yield return Shot("erase-2-preview");
+
             eraser.Confirm();
             yield return Frames(5);
             yield return Shot("erase-3-done");
+
+            // The clean (inpainted) fill takes a few seconds on a background thread.
+            var inpaintWait = Time.realtimeSinceStartup + 60f;
+            var inpaintStart = Time.realtimeSinceStartup;
+            while (eraser.isInpainting && Time.realtimeSinceStartup < inpaintWait)
+                yield return null;
+            Log($"inpainting took {Time.realtimeSinceStartup - inpaintStart:0.0} s, still busy {eraser.isInpainting}");
+            yield return Frames(5);
+            yield return Shot("erase-3-inpainted");
 
             var memory = FindAnyObjectByType<BackgroundMemory>();
             Log($"snapshots {(memory ? memory.count : -1)}");
@@ -281,6 +314,12 @@ namespace MoveIt.AR.Harness
                 LookFrom(orbitEye, center);
                 yield return Frames(10);
                 yield return Shot($"erase-4-angle{view.angle:+0;-0}-h{view.height:0.0}");
+
+                // The same view without the erase, to compare against.
+                eraser.SetShowOriginal(true);
+                yield return Frames(5);
+                yield return Shot($"erase-4-angle{view.angle:+0;-0}-h{view.height:0.0}-original");
+                eraser.SetShowOriginal(false);
             }
 
             // Close up: right next to where the object was, then standing inside it.
@@ -334,6 +373,50 @@ namespace MoveIt.AR.Harness
             var walls = new System.Collections.Generic.List<Wall>();
             RoomWalls.GetAll(walls);
             Log($"scanned, planes {(planes ? planes.trackables.count : -1)}, walls {walls.Count}, floor {(RoomFloor.TryGetY(out var y) ? y.ToString("0.00") : "none")}");
+        }
+
+        // A step stool standing free in the room: seat, step and four thin, slightly splayed legs. Thin legs are
+        // the hard case for the depth fit, and with no wall behind it the fill has to rebuild the floor.
+        void SpawnTestStool()
+        {
+            var reference = EnvironmentRenderers().FirstOrDefault(r => r.name.StartsWith("Chest"));
+            if (reference == null)
+            {
+                Log("no reference renderer for the test stool");
+                return;
+            }
+
+            var root = new GameObject("TestStool");
+            SceneManager.MoveGameObjectToScene(root, m_EnvironmentScene);
+            root.layer = reference.gameObject.layer;
+            root.transform.position = RoomCenter() + new Vector3(0.3f, 0f, 0.1f);
+            root.transform.rotation = Quaternion.Euler(0f, 20f, 0f);
+
+            void Part(string partName, Vector3 position, Vector3 size, Vector3 euler)
+            {
+                var part = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                part.name = "TestStool " + partName;
+                part.layer = root.layer;
+                part.transform.SetParent(root.transform, false);
+                part.transform.localPosition = position;
+                part.transform.localRotation = Quaternion.Euler(euler);
+                part.transform.localScale = size;
+                part.GetComponent<Renderer>().sharedMaterial = reference.sharedMaterial;
+            }
+
+            Part("Seat", new Vector3(0f, 0.5f, 0f), new Vector3(0.43f, 0.03f, 0.3f), Vector3.zero);
+            Part("Step", new Vector3(0f, 0.24f, 0.22f), new Vector3(0.43f, 0.03f, 0.18f), Vector3.zero);
+            foreach (var x in new[] { -0.19f, 0.19f })
+            {
+                foreach (var z in new[] { -0.12f, 0.12f })
+                {
+                    // Splay outwards towards the floor, like a real step stool.
+                    Part($"Leg {x} {z}", new Vector3(x * 1.08f, 0.25f, z * 1.15f), new Vector3(0.035f, 0.5f, 0.035f),
+                        new Vector3(z > 0 ? 4f : -4f, 0f, x > 0 ? -4f : 4f));
+                }
+            }
+
+            Log($"spawned test stool at {root.transform.position}");
         }
 
         // ----- Helpers -----

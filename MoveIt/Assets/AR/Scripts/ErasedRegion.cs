@@ -17,6 +17,19 @@ namespace MoveIt.AR
     }
 
     /// <summary>
+    /// World-space shape of an erased region at one moment: the box, the floor and the walls behind it.
+    /// Plain values, so it can be used off the main thread.
+    /// </summary>
+    public struct EraseGeometry
+    {
+        public Matrix4x4 worldToBox;
+        public Vector3 halfExtents;
+        public float floorY;
+        public float skirt;
+        public EraseWalls walls;
+    }
+
+    /// <summary>
     /// One erased real object: a box around it, drawn with the erase shaders so the floor and wall
     /// behind it show through. The GameObject's pivot is the bottom centre of the box, its forward
     /// axis points away from the user (towards the wall), and it isn't scaled.
@@ -42,6 +55,12 @@ namespace MoveIt.AR
         static readonly int s_DepthTexture = Shader.PropertyToID("_EraseDepthTexture");
         static readonly int s_DisplayMatrix = Shader.PropertyToID("_EraseDisplayMatrix");
         static readonly int s_DepthScale = Shader.PropertyToID("_EraseDepthScale");
+        static readonly int s_InpaintTexture = Shader.PropertyToID("_EraseInpaintTex");
+        static readonly int s_InpaintViewProj = Shader.PropertyToID("_EraseInpaintViewProj");
+        static readonly int s_HasInpaint = Shader.PropertyToID("_EraseHasInpaint");
+        static readonly int s_FloorMap = Shader.PropertyToID("_EraseFloorMap");
+        static readonly int s_FloorMapMatrix = Shader.PropertyToID("_EraseFloorMapMatrix");
+        static readonly int s_HasFloorMap = Shader.PropertyToID("_EraseHasFloorMap");
 
         static Material s_DepthMaterial;
         static Material s_FillMaterial;
@@ -51,22 +70,141 @@ namespace MoveIt.AR
         MeshRenderer m_Renderer;
         MaterialPropertyBlock m_Properties;
 
+        // A still photo of the spot with the object painted out (see EraseInpainter), the view-projection of the
+        // camera that took it (world space at the time), and the frame it's pinned to (the region's AR anchor, once
+        // it has one) with that frame's pose when it was pinned, so the photo follows the anchor.
+        Texture2D m_Inpainted;
+        Matrix4x4 m_InpaintViewProj;
+        Texture2D m_FloorMap;
+        Matrix4x4 m_WorldToFloorMap;
+        Transform m_PinFrame;
+        Matrix4x4 m_PinFrameToWorld;
+        bool m_WantErased;
+
         /// <summary>
         /// Width (x), height (y) and depth (z) of the erased box in metres.
         /// </summary>
         public Vector3 size => m_Size;
 
         /// <summary>
+        /// Whether the fill comes from an inpainted photo rather than being copied live every frame.
+        /// </summary>
+        public bool inpainted => m_Inpainted != null;
+
+        /// <summary>
+        /// The box, floor and walls in world space now, for building the inpainting mask.
+        /// </summary>
+        public EraseGeometry GetGeometry()
+        {
+            var root = transform;
+            var center = root.TransformPoint(new Vector3(0f, 0.5f * m_Size.y, 0f));
+            return new EraseGeometry
+            {
+                worldToBox = Matrix4x4.TRS(center, root.rotation, Vector3.one).inverse,
+                halfExtents = 0.5f * m_Size + k_Padding * Vector3.one,
+                floorY = root.position.y,
+                skirt = k_ShadowSkirt,
+                walls = new EraseWalls
+                {
+                    wallPoint = root.TransformPoint(m_LocalWalls.wallPoint),
+                    wallNormal = HorizontalWorld(m_LocalWalls.wallNormal),
+                    hasSecondWall = m_LocalWalls.hasSecondWall,
+                    secondWallPoint = root.TransformPoint(m_LocalWalls.secondWallPoint),
+                    secondWallNormal = HorizontalWorld(m_LocalWalls.secondWallNormal),
+                },
+            };
+        }
+
+        /// <summary>
+        /// Fills the region from <paramref name="texture"/>, a photo of the spot with the object painted out, taken
+        /// by a camera with world-space <paramref name="viewProjection"/>. The region takes ownership of the texture.
+        /// </summary>
+        public void SetInpainted(Texture2D texture, Matrix4x4 viewProjection)
+        {
+            if (m_Inpainted != null)
+                Destroy(m_Inpainted);
+            m_Inpainted = texture;
+            m_InpaintViewProj = viewProjection;
+            UpdateShaderProperties();
+            UpdateVisibility();
+        }
+
+        /// <summary>
+        /// A top-down texture of the floor around the region (see EraseInpainter), used where the photo doesn't
+        /// reach, e.g. seen from the side. <paramref name="worldToMap"/> maps a world point (at the time) to its UV.
+        /// The region takes ownership of the texture.
+        /// </summary>
+        public void SetFloorMap(Texture2D texture, Matrix4x4 worldToMap)
+        {
+            if (m_FloorMap != null)
+                Destroy(m_FloorMap);
+            m_FloorMap = texture;
+            m_WorldToFloorMap = worldToMap;
+            UpdateShaderProperties();
+        }
+
+        /// <summary>
+        /// Makes the photo follow <paramref name="frame"/> (the region's AR anchor) from now on, so it stays on the
+        /// room when ARCore refines its map. Call when the region is anchored.
+        /// </summary>
+        public void PinTo(Transform frame)
+        {
+            m_PinFrame = frame;
+            m_PinFrameToWorld = frame != null ? frame.localToWorldMatrix : Matrix4x4.identity;
+        }
+
+        // A world-space matrix from when the photo was taken, moved along with the pin frame since.
+        Matrix4x4 Pinned(Matrix4x4 worldMatrix)
+        {
+            return m_PinFrame != null
+                ? worldMatrix * m_PinFrameToWorld * m_PinFrame.worldToLocalMatrix
+                : worldMatrix;
+        }
+
+        void OnDestroy()
+        {
+            if (m_Inpainted != null)
+                Destroy(m_Inpainted);
+            if (m_FloorMap != null)
+                Destroy(m_FloorMap);
+        }
+
+        /// <summary>
         /// Shows the real object again (false) or hides it (true).
         /// </summary>
+        /// <remarks>
+        /// Nothing is drawn until the inpainted photo is ready (unless <see cref="allowLiveFill"/>): the live fill
+        /// it replaces copies pixels every frame and looks smeared.
+        /// </remarks>
         public bool erased
         {
-            get => m_Renderer != null && m_Renderer.enabled;
+            get => m_WantErased;
             set
             {
-                if (m_Renderer != null)
-                    m_Renderer.enabled = value;
+                m_WantErased = value;
+                UpdateVisibility();
             }
+        }
+
+        /// <summary>
+        /// Draw the live fill while there's no inpainted photo, e.g. when no photo could be taken.
+        /// </summary>
+        public bool allowLiveFill
+        {
+            get => m_AllowLiveFill;
+            set
+            {
+                m_AllowLiveFill = value;
+                UpdateVisibility();
+            }
+        }
+
+        bool m_AllowLiveFill;
+
+        void UpdateVisibility()
+        {
+            if (m_Renderer != null)
+                m_Renderer.enabled = m_WantErased && (m_Inpainted != null || m_AllowLiveFill);
         }
 
         /// <summary>
@@ -96,6 +234,7 @@ namespace MoveIt.AR
             region.m_Properties = new MaterialPropertyBlock();
 
             region.SetBox(pose, size, walls);
+            region.UpdateVisibility();
             return region;
         }
 
@@ -169,6 +308,31 @@ namespace MoveIt.AR
                 m_Properties.SetTexture(s_DepthTexture, Texture2D.blackTexture);
                 m_Properties.SetFloat(s_DepthScale, 0f);
             }
+
+            if (m_Inpainted != null)
+            {
+                m_Properties.SetTexture(s_InpaintTexture, m_Inpainted);
+                m_Properties.SetMatrix(s_InpaintViewProj, Pinned(m_InpaintViewProj));
+                m_Properties.SetFloat(s_HasInpaint, 1f);
+            }
+            else
+            {
+                m_Properties.SetTexture(s_InpaintTexture, Texture2D.blackTexture);
+                m_Properties.SetFloat(s_HasInpaint, 0f);
+            }
+
+            if (m_FloorMap != null)
+            {
+                m_Properties.SetTexture(s_FloorMap, m_FloorMap);
+                m_Properties.SetMatrix(s_FloorMapMatrix, Pinned(m_WorldToFloorMap));
+                m_Properties.SetFloat(s_HasFloorMap, 1f);
+            }
+            else
+            {
+                m_Properties.SetTexture(s_FloorMap, Texture2D.blackTexture);
+                m_Properties.SetFloat(s_HasFloorMap, 0f);
+            }
+
             m_Renderer.SetPropertyBlock(m_Properties);
         }
 

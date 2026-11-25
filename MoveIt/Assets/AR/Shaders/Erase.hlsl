@@ -3,7 +3,10 @@
 
 // Diminished reality for one erased object.
 //
-// First choice: real pixels. BackgroundMemory keeps snapshots of the room from earlier viewpoints; the point
+// Best: an inpainted photo (EraseInpainter.cs). When the user confirms the erase, one photo is taken and the object
+// painted out of it with texture from the rest of the photo. The floor or wall point behind the object is projected
+// into that photo, so the fill is pinned to the room and stays still as the user moves.
+// Until that's ready, and for spots the photo doesn't cover, real pixels where possible. BackgroundMemory keeps snapshots of the room from earlier viewpoints; the point
 // behind the object is looked up in each, and used if that snapshot's depth shows it was actually visible.
 // Fallback, for spots never seen (e.g. right under the object):
 // The object is covered by a box. The room around it is modelled as the floor plus up to two walls
@@ -43,6 +46,20 @@ float4x4 _MemoryViewProj[MEMORY_SNAPSHOTS];
 float4x4 _MemoryDisplay[MEMORY_SNAPSHOTS];
 float4 _MemoryPositions[MEMORY_SNAPSHOTS];   // xyz: camera position; w: depth scale to metres
 float _MemoryCount;
+
+// Inpainted photo of the spot (see above). Alpha says what it shows: 1 painted in (the erased object was there),
+// about 0.6 floor, 0 anything else. _EraseHasInpaint is 1 once there is one.
+TEXTURE2D(_EraseInpaintTex);
+SAMPLER(sampler_EraseInpaintTex);
+float4x4 _EraseInpaintViewProj;
+float _EraseHasInpaint;
+
+// Top-down map of the floor around the object, built from the inpainted photo, for floor the photo doesn't reach
+// (seen from the side). _EraseFloorMapMatrix maps a world point to its UV; _EraseHasFloorMap is 1 once there is one.
+TEXTURE2D(_EraseFloorMap);
+SAMPLER(sampler_EraseFloorMap);
+float4x4 _EraseFloorMapMatrix;
+float _EraseHasFloorMap;
 
 #define ERASE_SKIRT_HEIGHT 0.03
 
@@ -253,32 +270,28 @@ bool SurfaceVisible(float3 p)
     return measured > expected - (0.1 + 0.04 * expected);
 }
 
-// True when a real object stands between the camera and the erased box at this pixel (e.g. a bed in front of
-// the erased chest). Such pixels must keep the real image and depth.
-bool RealObjectInFront(float3 cameraWS, float3 dir, float3 cameraBS, float2 uv)
+// True when what the camera sees at this pixel is the erased object itself (or its shadow on the floor right
+// around it): the measured depth lands inside the box or the skirt. Everything else seen through the box's
+// outline is real background (furniture behind it, a person in front of it) and keeps its image and depth,
+// so the box doesn't have to fit tightly. Without depth, every pixel inside the outline counts.
+bool ShowsErasedObject(float3 cameraWS, float3 dir, float2 uv)
 {
     float measured = MeasuredDepth(uv);
     if (measured <= 0.01)
-        return false;
+        return true;
 
-    // A measured point inside the box (with some slack for depth noise) is part of the erased object itself,
-    // even where it sticks out a little in front of the box.
+    // Depth is measured along the camera's view axis, not along the ray.
     float3 forward = -UNITY_MATRIX_V[2].xyz;
     float3 measuredWS = cameraWS + dir * (measured / max(dot(dir, forward), 1e-3));
-    float3 measuredBS = mul(_EraseWorldToBox, float4(measuredWS, 1.0)).xyz;
-    if (all(abs(measuredBS) <= _EraseHalfExtents + 0.15))
-        return false;
+    float3 p = mul(_EraseWorldToBox, float4(measuredWS, 1.0)).xyz;
 
-    // Where the view ray enters the box.
-    float3 dirBS = mul((float3x3)_EraseWorldToBox, dir);
-    dirBS += (abs(dirBS) < 1e-6) ? 1e-6 : 0.0;
-    float3 t0 = (-_EraseHalfExtents - cameraBS) / dirBS;
-    float3 t1 = (_EraseHalfExtents - cameraBS) / dirBS;
-    float3 tMin = min(t0, t1);
-    float tNear = max(max(max(tMin.x, tMin.y), tMin.z), 0.0);
-    float entryDepth = -TransformWorldToView(cameraWS + dir * tNear).z;
+    // Slack for depth noise at the object's edges.
+    const float slack = 0.05;
+    if (all(abs(p) <= _EraseHalfExtents + slack))
+        return true;
 
-    return measured < entryDepth - (0.05 + 0.03 * entryDepth);
+    float3 skirtHalf = float3(_EraseHalfExtents.x + _EraseSkirt, ERASE_SKIRT_HEIGHT + slack, _EraseHalfExtents.z + _EraseSkirt);
+    return all(abs(p - float3(0.0, -_EraseHalfExtents.y, 0.0)) <= skirtHalf);
 }
 
 // From the edge of what the box hides (distance s along dir), finds a point on the same surface to copy:
@@ -397,6 +410,108 @@ bool SampleMemory(float3 p, float3 cameraWS, out half3 color)
     return true;
 }
 
+bool HasInpaint()
+{
+    return _EraseHasInpaint > 0.5;
+}
+
+// The room point p as seen in the inpainted photo, if the photo covers it, with the photo's alpha there.
+bool SampleInpainted(float3 p, out half3 color, out float alpha)
+{
+    color = 0;
+    alpha = 0.0;
+    if (!HasInpaint())
+        return false;
+
+    float4 clip = mul(_EraseInpaintViewProj, float4(p, 1.0));
+    if (clip.w <= 0.05)
+        return false;
+
+    float2 uv = clip.xy / clip.w * 0.5 + 0.5;
+    if (any(uv < 0.002) || any(uv > 0.998))
+        return false;
+
+    half4 sample = SAMPLE_TEXTURE2D_LOD(_EraseInpaintTex, sampler_EraseInpaintTex, uv, 0);
+    color = sample.rgb;
+    alpha = sample.a;
+    return true;
+}
+
+// True when the live depth shows something clearly in front of the erased box at this pixel (the user's hand, or
+// furniture between the camera and the spot when looking from another side): that stays visible.
+bool SomethingInFrontOfBox(float3 cameraWS, float3 dir, float2 uv)
+{
+    float measured = MeasuredDepth(uv);
+    if (measured <= 0.01)
+        return false;
+
+    float3 originBS = mul(_EraseWorldToBox, float4(cameraWS, 1.0)).xyz;
+    float3 dirBS = mul((float3x3)_EraseWorldToBox, dir);
+    dirBS += (abs(dirBS) < 1e-6) ? 1e-6 : 0.0;
+    float3 t0 = (-_EraseHalfExtents - originBS) / dirBS;
+    float3 t1 = (_EraseHalfExtents - originBS) / dirBS;
+    float entry = max(max(min(t0.x, t1.x), min(t0.y, t1.y)), min(t0.z, t1.z));
+
+    float3 forward = -UNITY_MATRIX_V[2].xyz;
+    float alongRay = measured / max(dot(dir, forward), 1e-3);
+    return alongRay < max(entry, 0.0) - (0.1 + 0.04 * alongRay);
+}
+
+// The floor point p in the floor map, if the map covers it.
+bool SampleFloorMap(float3 p, out half3 color)
+{
+    color = 0;
+    if (_EraseHasFloorMap < 0.5)
+        return false;
+
+    float2 uv = mul(_EraseFloorMapMatrix, float4(p, 1.0)).xy;
+    if (any(uv < 0.002) || any(uv > 0.998))
+        return false;
+
+    color = SAMPLE_TEXTURE2D_LOD(_EraseFloorMap, sampler_EraseFloorMap, uv, 0).rgb;
+    return true;
+}
+
+// Whether this pixel shows the erased object and gets replaced. Wherever the inpainted photo covers the background
+// point, the whole outline is replaced from it (unless something is in front of the box): the photo shows either
+// the painted-in spot or what really was there, and it doesn't flicker or leave edges of the object showing the
+// way the noisy live depth does. Outside the photo, the live depth decides.
+bool ReplacePixel(float3 cameraWS, float3 dir, float3 positionWS, float3 hit, int surface, out bool inPhoto,
+    out half3 photoColor, out bool inMap, out half3 mapColor)
+{
+    // Kept as numbers rather than bools: Unity's Metal translation miscompiles a select between bool results.
+    float alpha;
+    bool covered = SampleInpainted(hit, photoColor, alpha);
+
+    // Floor is taken from the photo only where the photo shows floor there; seen from the side, a floor point behind
+    // the object can be where the photo showed something else (the side of a bed), which would be pasted onto the
+    // floor. The floor map has floor everywhere.
+    float usePhoto = covered ? 1.0 : 0.0;
+    if (surface == SURFACE_FLOOR && alpha < 0.4)
+        usePhoto = 0.0;
+    inPhoto = usePhoto > 0.5;
+    inMap = false;
+    mapColor = 0;
+    if (!inPhoto && surface == SURFACE_FLOOR)
+        inMap = SampleFloorMap(hit, mapColor);
+
+    float2 uv = WorldToScreenUV(positionWS);
+    float replace;
+    if (covered && alpha > 0.8)
+    {
+        // The photo saw the erased object here: replace, unless something is in front of it now.
+        replace = SomethingInFrontOfBox(cameraWS, dir, uv) ? 0.0 : 1.0;
+    }
+    else
+    {
+        // Elsewhere (seen from another side than the photo), the live depth decides, so furniture behind the box
+        // stays visible.
+        replace = ShowsErasedObject(cameraWS, dir, uv) ? 1.0 : 0.0;
+    }
+
+    return replace > 0.5;
+}
+
 // From inside the box there's nothing sensible to show (every view ray starts inside the erased volume), so
 // the region isn't drawn while the camera is in it, e.g. when the user walks to where a bed was erased.
 bool CameraInsideBox(float3 cameraBS)
@@ -416,10 +531,14 @@ half4 EraseDepthFrag(Varyings input, out float depth : SV_Depth) : SV_Target
     if (!HitBackground(cameraWS, dir, hit, surface))
         discard;
 
-    // Pixels the box and skirt don't hide, or where something real stands in front, keep their real depth.
+    // Only pixels that show the erased object (or its shadow) get the background's depth; the rest keep theirs.
     float3 cameraBS = mul(_EraseWorldToBox, float4(cameraWS, 1.0)).xyz;
+    bool inPhoto;
+    half3 photoColor;
+    bool inMap;
+    half3 mapColor;
     if (CameraInsideBox(cameraBS) || !SightBlockedByBox(cameraBS, hit) ||
-        RealObjectInFront(cameraWS, dir, cameraBS, WorldToScreenUV(input.positionWS)))
+        !ReplacePixel(cameraWS, dir, input.positionWS, hit, surface, inPhoto, photoColor, inMap, mapColor))
         discard;
 
     depth = WorldToDeviceDepth(hit);
@@ -441,8 +560,12 @@ half4 EraseFillFrag(Varyings input, out float depth : SV_Depth) : SV_Target
     // The drawn box is larger than the erased volume (it also covers the shadow skirt); pixels whose
     // background isn't hidden are already correct, so leave them.
     float3 cameraBS = mul(_EraseWorldToBox, float4(cameraWS, 1.0)).xyz;
+    bool inPhoto;
+    half3 photoColor;
+    bool inMap;
+    half3 mapColor;
     if (CameraInsideBox(cameraBS) || !SightBlockedByBox(cameraBS, hit) ||
-        RealObjectInFront(cameraWS, dir, cameraBS, WorldToScreenUV(input.positionWS)))
+        !ReplacePixel(cameraWS, dir, input.positionWS, hit, surface, inPhoto, photoColor, inMap, mapColor))
         discard;
 
     depth = WorldToDeviceDepth(hit);
@@ -452,10 +575,21 @@ half4 EraseFillFrag(Varyings input, out float depth : SV_Depth) : SV_Target
     depth -= 1e-6;
 #endif
 
+    // The inpainted photo: painted-in where the object hid the spot, the real room where it didn't.
+    if (inPhoto)
+        return half4(photoColor, 1.0);
+
+    // Floor the photo doesn't reach, from the floor map.
+    if (inMap)
+        return half4(mapColor, 1.0);
+
     // Real pixels from an earlier viewpoint, when the point behind the object was seen.
     half3 remembered;
     if (SampleMemory(hit, cameraWS, remembered))
         return half4(remembered, 1.0);
+
+    // Last resort, for views far from where the photo was taken (from the side): copied from around the object,
+    // which looks smeared, but better than the object showing through.
 
     // Directions to walk along the surface. Copying from beside the object is preferred: copying from
     // above (on a wall) or from nearer the camera (on the floor) is often lit differently.
