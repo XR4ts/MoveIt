@@ -368,6 +368,19 @@ namespace UnityEngine.XR.Templates.AR
         }
 
         /// <summary>
+        /// Whether detected surfaces are drawn. Setting it keeps the Visualize Surfaces toggle in the options menu in sync.
+        /// </summary>
+        public bool visualizePlanes
+        {
+            get => m_VisualizePlanes;
+            set
+            {
+                if (value != m_VisualizePlanes)
+                    ShowHideDebugPlane();
+            }
+        }
+
+        /// <summary>
         /// Shows or hides the plane debug visuals.
         /// </summary>
         public void ShowHideDebugPlane()
