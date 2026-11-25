@@ -16,7 +16,8 @@ namespace MoveIt.AR
     /// Lets the user erase real objects from the camera view.
     /// The user taps an object; <see cref="DepthObjectFitter"/> finds it in the depth image and fits a box around it,
     /// and everything inside the box is erased live (see <see cref="ErasedRegion"/>). If the fit is off, or depth
-    /// isn't available, the user can drag, rotate and resize the box before tapping Done.
+    /// isn't available, the user can drag, rotate and resize the box before tapping Done. What's shown is a clean,
+    /// still fill (<see cref="EraseInpainter"/>), redone a moment after each change to the box.
     /// </summary>
     public class ObjectEraser : MonoBehaviour
     {
@@ -36,9 +37,13 @@ namespace MoveIt.AR
         const float k_MaxDepthToWall = 1.2f;
         const float k_WallSearchDistance = 3f;
         const float k_WallContactDistance = 0.3f;
-        const float k_BackdropDistance = 0.3f;
+        // Distance of the stand-in backdrop behind a free-standing object. Far away, so view rays looking down
+        // reach the real floor behind the object before it; only rays above the horizon end on it.
+        const float k_BackdropDistance = 3f;
         const float k_RotateStep = 15f;
         const float k_TapSlop = 30f;
+        // Wait this long after the last change to the box before inpainting it again.
+        const float k_InpaintDelay = 0.4f;
 
         static readonly Color k_PreviewColor = new Color(1f, 0.85f, 0.2f, 0.95f);
 
@@ -51,6 +56,7 @@ namespace MoveIt.AR
         Camera m_Camera;
         ARAnchorManager m_AnchorManager;
         DepthObjectFitter m_Fitter;
+        EraseInpainter m_Inpainter;
         bool m_ShowingOriginal;
         bool m_HidingDots;
 
@@ -60,6 +66,8 @@ namespace MoveIt.AR
         float m_Yaw;
         Vector3 m_Size;
         float m_FloorY;
+        float m_InpaintDue;
+        string m_AdjustMessage;
 
         // Input
         Vector2 m_PressPosition;
@@ -77,6 +85,7 @@ namespace MoveIt.AR
         TMP_Text m_ShowOriginalLabel;
         GameObject m_InstructionBar;
         TMP_Text m_Instructions;
+        GameObject m_ProgressBar;
         GameObject m_AdjustCard;
         GameObject m_AdjustControls;
         TMP_Text m_AdjustToggleLabel;
@@ -111,6 +120,10 @@ namespace MoveIt.AR
             if (m_Fitter == null)
                 m_Fitter = gameObject.AddComponent<DepthObjectFitter>();
 
+            m_Inpainter = GetComponent<EraseInpainter>();
+            if (m_Inpainter == null)
+                m_Inpainter = gameObject.AddComponent<EraseInpainter>();
+
             BuildUI();
             BuildOutline();
             SetState(State.Idle);
@@ -121,12 +134,38 @@ namespace MoveIt.AR
             if (m_State == State.PlaceBox)
                 HandleTap();
             else if (m_State == State.Adjust)
+            {
                 HandleDragAndTwist();
+                UpdatePreview();
+            }
+
+            var cleaning = m_State == State.Idle && isInpainting;
+            if (m_ProgressBar.activeSelf != cleaning)
+                m_ProgressBar.SetActive(cleaning);
         }
 
         void OnDestroy()
         {
             RestoreSpawning();
+        }
+
+        // Redoes the clean fill once the user has stopped changing the box, and says when it's being worked on.
+        void UpdatePreview()
+        {
+            if (m_Live == null)
+                return;
+
+            if (m_InpaintDue > 0f && Time.unscaledTime >= m_InpaintDue && !m_Dragging && !m_Twisting)
+            {
+                m_InpaintDue = 0f;
+                m_Inpainter.Request(m_Live);
+            }
+
+            var message = m_Live.inpainted || m_Live.allowLiveFill
+                ? m_AdjustMessage
+                : "Removing it\u2026 hold on a moment.";
+            if (m_Instructions.text != message)
+                m_Instructions.text = message;
         }
 
         // ----- Scripting (used by the test harness) -----
@@ -154,6 +193,9 @@ namespace MoveIt.AR
 
         /// <summary>True while waiting for the depth fit.</summary>
         public bool isMeasuring => m_State == State.Measuring;
+
+        /// <summary>Whether a confirmed erase is still getting its clean fill.</summary>
+        public bool isInpainting => m_Inpainter != null && m_Inpainter.busy;
 
         /// <summary>The box being edited, for logging: front-edge centre, yaw and size.</summary>
         public string boxDescription => $"front {m_Front}, yaw {m_Yaw:0}, size {m_Size}";
@@ -317,6 +359,7 @@ namespace MoveIt.AR
             }
 
             m_Front = fit.front;
+            m_FloorY = fit.front.y;
             m_Yaw = fit.yaw;
             m_Size = ClampSize(fit.size);
             StartAdjusting(true);
@@ -377,9 +420,14 @@ namespace MoveIt.AR
 
             SetState(State.Adjust);
             SetAdjustControlsVisible(!autoFitted);
-            m_Instructions.text = autoFitted
+            m_AdjustMessage = autoFitted
                 ? "Gone? Tap <b>Done</b>. If part of it shows, tap <b>Adjust</b>."
                 : "Couldn't measure it automatically. Drag, twist and resize the box until the object is gone.";
+            m_Instructions.text = m_AdjustMessage;
+
+            // Photo now, while the camera points at the object; the clean fill shows a moment later.
+            m_InpaintDue = 0f;
+            m_Inpainter.Request(m_Live);
         }
 
         static Vector3 ClampSize(Vector3 size)
@@ -433,6 +481,8 @@ namespace MoveIt.AR
 
             m_Live.erased = true;
             UpdateOutline(bottomCenter, rotation);
+            if (m_State == State.Adjust)
+                m_InpaintDue = Time.unscaledTime + k_InpaintDelay;
         }
 
         // The walls the erase fill copies from: up to two walls the box stands against (two in a corner), or a
@@ -510,6 +560,11 @@ namespace MoveIt.AR
                 m_Live.erased = !m_ShowingOriginal;
                 m_Erased.Add(m_Live);
                 AnchorAsync(m_Live);
+                // Redo the fill if the last change to the box hasn't been inpainted yet, then free the photo.
+                if (m_InpaintDue > 0f)
+                    m_Inpainter.Request(m_Live);
+                m_InpaintDue = 0f;
+                m_Inpainter.Finish(m_Live);
                 m_Live = null;
             }
 
@@ -538,6 +593,7 @@ namespace MoveIt.AR
                 return;
 
             region.transform.SetParent(result.value.transform, true);
+            region.PinTo(result.value.transform);
         }
 
         void Undo()
@@ -773,6 +829,11 @@ namespace MoveIt.AR
             var bar = MoveItUI.CreateStatusBar("Erase Instructions", out m_Instructions);
             MoveItUI.CreateButton(bar, "Cancel", Cancel);
             m_InstructionBar = bar.gameObject;
+
+            var progress = MoveItUI.CreateStatusBar("Erase Progress", out var progressText);
+            progressText.text = "Cleaning up where it was\u2026";
+            m_ProgressBar = progress.gameObject;
+            m_ProgressBar.SetActive(false);
 
             // Compact card at the bottom while adjusting the box.
             var card = MoveItUI.CreatePanel("Erase Adjust", root, 20, 8);

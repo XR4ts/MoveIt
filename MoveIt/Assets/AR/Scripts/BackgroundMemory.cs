@@ -231,7 +231,9 @@ namespace MoveIt.AR
             Shader.SetGlobalMatrixArray(s_ViewProj, m_ViewProj);
             Shader.SetGlobalMatrixArray(s_Display, m_Display);
             Shader.SetGlobalVectorArray(s_Positions, m_Positions);
-            Shader.SetGlobalFloat(s_Count, m_Depths != null ? m_Count : 0);
+            // -moveitNoMemory (test harness) turns the snapshots off, to compare against the fallback fill.
+            var disabled = System.Array.IndexOf(System.Environment.GetCommandLineArgs(), "-moveitNoMemory") >= 0;
+            Shader.SetGlobalFloat(s_Count, m_Depths != null && !disabled ? m_Count : 0);
         }
 
         static RenderTexture CreateArray(int width, int height, RenderTextureFormat format)

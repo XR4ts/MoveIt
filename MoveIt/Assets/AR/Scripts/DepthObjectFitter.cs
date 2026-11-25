@@ -37,6 +37,10 @@ namespace MoveIt.AR
             public Vector3 size;
         }
 
+        // Floor points within this horizontal distance of the object set its local floor height.
+        const float k_LocalFloorRadius = 0.8f;
+        const int k_MinLocalFloorPoints = 20;
+
         // Screen sampling grid, columns across the screen; rows follow the aspect ratio.
         const int k_GridColumns = 90;
         const float k_MaxRange = 5f;
@@ -48,10 +52,13 @@ namespace MoveIt.AR
         const float k_MaxObjectRadius = 2f;
         const int k_MinPoints = 12;
         const int k_SeedSearchRadius = 6;
-        const float k_Padding = 0.06f;
+        const float k_Padding = 0.08f;
         const float k_WallAlignDistance = 0.8f;
         const float k_ReachWallDistance = 0.8f;
         const float k_GuessedExtraDepth = 0.15f;
+        // Keep the box this far from other objects next to it (the erase fill and its depth checks reach a few cm
+        // past the box), so a bed right beside a stool isn't erased with it.
+        const float k_NeighbourGap = 0.1f;
         const float k_MinDepth = 0.3f;
         // Undetected parts of a wall (low down, behind furniture) still belong to it, so walls count as infinite.
         const float k_WallLateralTolerance = 10f;
@@ -234,6 +241,94 @@ namespace MoveIt.AR
                 done(ok, fit);
             });
             return true;
+        }
+
+        /// <summary>
+        /// Measured depth at a screen position (0..1, origin bottom left), in metres along the camera axis;
+        /// 0 where there's no measurement. Safe to call from any thread.
+        /// </summary>
+        public delegate float DepthLookup(float u, float v);
+
+        /// <summary>
+        /// Reads the current depth image, for one-off uses such as the inpainting mask. Calls
+        /// <paramref name="done"/> on the main thread with a lookup, or with null if the read fails. Returns false
+        /// when there's no depth to read.
+        /// </summary>
+        public bool TryReadDepth(Action<DepthLookup> done)
+        {
+            if (m_Occlusion == null || !m_Occlusion.enabled)
+                return false;
+
+            var display = m_DisplayMatrix;
+            if (TryReadCpuDepth(out var cpu, out var cpuWidth, out var cpuHeight))
+            {
+                var values = cpu.ToArray();
+                cpu.Dispose();
+                done(MakeLookup(values, cpuWidth, cpuHeight, display, 1f));
+                return true;
+            }
+
+            if (!available || m_Busy)
+                return false;
+
+            var scale = depthScale;
+            m_Busy = true;
+            AsyncGPUReadback.Request(m_DepthTexture, 0, TextureFormat.RFloat, request =>
+            {
+                m_Busy = false;
+                if (request.hasError || this == null)
+                {
+                    done(null);
+                    return;
+                }
+
+                done(MakeLookup(request.GetData<float>().ToArray(), request.width, request.height, display, scale));
+            });
+            return true;
+        }
+
+        static DepthLookup MakeLookup(float[] values, int width, int height, Matrix4x4 m, float scale)
+        {
+            // Test harness: -moveitNoisyDepth makes depth as coarse and noisy as a phone's without a depth sensor.
+            if (Array.IndexOf(Environment.GetCommandLineArgs(), "-moveitNoisyDepth") >= 0)
+                values = MakeNoisy(values, width, height, scale, out width, out height, out scale);
+
+            return (u, v) =>
+            {
+                // Same mapping as SampleDepth.
+                var tu = u * m.m00 + v * m.m10 + m.m20;
+                var tv = u * m.m01 + v * m.m11 + m.m21;
+                var x = Mathf.Clamp((int)(tu * width), 0, width - 1);
+                var y = Mathf.Clamp((int)(tv * height), 0, height - 1);
+                return values[y * width + x] * scale;
+            };
+        }
+
+        // 160x90 like a Galaxy S24, noise growing with distance, and some missing readings.
+        static float[] MakeNoisy(float[] values, int width, int height, float scale, out int newWidth,
+            out int newHeight, out float newScale)
+        {
+            newWidth = 160;
+            newHeight = 90;
+            newScale = 1f;
+            var random = new System.Random(7);
+            var result = new float[newWidth * newHeight];
+            for (var y = 0; y < newHeight; y++)
+            for (var x = 0; x < newWidth; x++)
+            {
+                var d = values[(y * height / newHeight) * width + x * width / newWidth] * scale;
+                if (d <= 0f || random.NextDouble() < 0.1)
+                {
+                    result[y * newWidth + x] = 0f;
+                    continue;
+                }
+
+                // Roughly Gaussian.
+                var n = (float)(random.NextDouble() + random.NextDouble() + random.NextDouble() - 1.5) * 2f;
+                result[y * newWidth + x] = Mathf.Max(0.05f, d + n * (0.03f + 0.03f * d * d));
+            }
+
+            return result;
         }
 
         // On a phone, read ARCore's depth image on the CPU: reading the depth texture back from the GPU fails
@@ -434,10 +529,41 @@ namespace MoveIt.AR
                 return false;
 
             // 4. Fit the box, then include things standing on top of the object.
+            // ARCore's floor plane is often a few cm off the real floor; measure the floor right around the
+            // object instead, so the box reaches down to it (thin legs are otherwise left sticking out).
+            c.floorY = LocalFloorY(points, kinds, region, c.floorY);
             fit = FitBox(region, c);
+            fit = AvoidNeighbours(fit, region, points, kinds, inRegion, c.floorY);
             fit = IncludeThingsOnTop(fit, points, kinds, inRegion, c.floorY);
             Debug.Log($"[DepthFit] fit front {fit.front}, yaw {fit.yaw:0}, size {fit.size}");
             return true;
+        }
+
+        static float LocalFloorY(Vector3[] points, Kind[] kinds, List<Vector3> region, float planeFloorY)
+        {
+            var centroid = Vector3.zero;
+            foreach (var p in region)
+                centroid += p;
+            centroid /= region.Count;
+
+            var heights = new List<float>();
+            for (var i = 0; i < points.Length; i++)
+            {
+                if (kinds[i] != Kind.Floor)
+                    continue;
+
+                var offset = points[i] - centroid;
+                offset.y = 0f;
+                if (offset.sqrMagnitude <= k_LocalFloorRadius * k_LocalFloorRadius)
+                    heights.Add(points[i].y);
+            }
+
+            if (heights.Count < k_MinLocalFloorPoints)
+                return planeFloorY;
+
+            var local = Percentile(heights, 0.5f);
+            Debug.Log($"[DepthFit] local floor {local:0.000} (plane {planeFloorY:0.000}, {heights.Count} points)");
+            return local;
         }
 
         // Surface normals from neighbouring grid points, facing the camera.
@@ -493,6 +619,81 @@ namespace MoveIt.AR
 
         // Raises the box to cover object points standing within its footprint, like a lamp on a chest, which the
         // convexity test keeps out of the region (the seam under them is concave).
+        // Pulls in sides of the (padded) box that reach into another object next to it: each side keeps at least
+        // k_NeighbourGap from the neighbour, but never cuts into the object itself.
+        static Fit AvoidNeighbours(Fit fit, List<Vector3> region, Vector3[] points, Kind[] kinds, bool[] inRegion,
+            float floorY)
+        {
+            var rotation = Quaternion.Euler(0f, fit.yaw, 0f);
+            var toLocal = Quaternion.Inverse(rotation);
+
+            // The object's own extent, as in FitBox (x across, z along from the front edge).
+            var across = new List<float>(region.Count);
+            var along = new List<float>(region.Count);
+            foreach (var p in region)
+            {
+                var local = toLocal * (p - fit.front);
+                across.Add(local.x);
+                along.Add(local.z);
+            }
+
+            var minX = Percentile(across, 0.005f);
+            var maxX = Percentile(across, 0.995f);
+            var minZ = Percentile(along, 0.005f);
+            var maxZ = Percentile(along, 0.995f);
+
+            var x0 = -0.5f * fit.size.x;
+            var x1 = 0.5f * fit.size.x;
+            var z0 = 0f;
+            var z1 = fit.size.z;
+            var top = floorY + fit.size.y;
+            var changed = false;
+
+            for (var i = 0; i < points.Length; i++)
+            {
+                if (inRegion[i] || kinds[i] != Kind.Object || points[i].y < floorY + 0.03f || points[i].y > top)
+                    continue;
+
+                // Inside the box, or just outside it (the fill reaches a few cm past the box).
+                var local = toLocal * (points[i] - fit.front);
+                if (local.x < x0 - k_NeighbourGap || local.x > x1 + k_NeighbourGap ||
+                    local.z < z0 - k_NeighbourGap || local.z > z1 + k_NeighbourGap)
+                    continue;
+
+                // Above or inside the object's footprint: something standing on it, which IncludeThingsOnTop handles.
+                var besideX = local.x < minX || local.x > maxX;
+                var besideZ = local.z < minZ || local.z > maxZ;
+                if (!besideX && !besideZ)
+                    continue;
+
+                // Pull in the side facing it the least distance needed.
+                if (besideX && (!besideZ || Mathf.Min(Mathf.Abs(local.x - minX), Mathf.Abs(local.x - maxX)) <=
+                        Mathf.Min(Mathf.Abs(local.z - minZ), Mathf.Abs(local.z - maxZ))))
+                {
+                    if (local.x < minX)
+                        x0 = Mathf.Min(Mathf.Max(x0, local.x + k_NeighbourGap), minX);
+                    else
+                        x1 = Mathf.Max(Mathf.Min(x1, local.x - k_NeighbourGap), maxX);
+                }
+                else if (local.z < minZ)
+                    z0 = Mathf.Min(Mathf.Max(z0, local.z + k_NeighbourGap), minZ);
+                else
+                    z1 = Mathf.Max(Mathf.Min(z1, local.z - k_NeighbourGap), maxZ);
+
+                changed = true;
+            }
+
+            if (!changed)
+                return fit;
+
+            Debug.Log($"[DepthFit] pulled in from neighbours: x {-0.5f * fit.size.x:0.00}..{0.5f * fit.size.x:0.00} -> " +
+                $"{x0:0.00}..{x1:0.00}, z 0..{fit.size.z:0.00} -> {z0:0.00}..{z1:0.00}");
+            fit.front += rotation * new Vector3(0.5f * (x0 + x1), 0f, z0);
+            fit.size.x = x1 - x0;
+            fit.size.z = z1 - z0;
+            return fit;
+        }
+
         static Fit IncludeThingsOnTop(Fit fit, Vector3[] points, Kind[] kinds, bool[] inRegion, float floorY)
         {
             var toLocal = Quaternion.Inverse(Quaternion.Euler(0f, fit.yaw, 0f));
@@ -638,11 +839,13 @@ namespace MoveIt.AR
             }
 
             // Percentiles instead of min/max, so a few noisy depth points don't blow up the box.
-            var s0 = Percentile(across, 0.01f) - k_Padding;
-            var s1 = Percentile(across, 0.99f) + k_Padding;
-            var t0 = Percentile(along, 0.01f) - k_Padding;
-            var t1 = Percentile(along, 0.99f);
-            var top = Percentile(heights, 0.99f) + k_Padding;
+            // Narrow percentiles: thin parts such as chair and stool legs give only a few points, and they are
+            // often the widest part of the object, so they must not be dropped as noise.
+            var s0 = Percentile(across, 0.005f) - k_Padding;
+            var s1 = Percentile(across, 0.995f) + k_Padding;
+            var t0 = Percentile(along, 0.005f) - k_Padding;
+            var t1 = Percentile(along, 0.995f);
+            var top = Percentile(heights, 0.995f) + k_Padding;
 
             // The camera only sees the front: reach back to the wall behind, or add a guess.
             var reachedWall = false;
