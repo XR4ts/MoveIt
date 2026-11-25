@@ -10,6 +10,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Transformers;
 using Object = UnityEngine.Object;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Transformers;
 
 
 namespace MoveIt.Furniture.Editor
@@ -167,6 +169,32 @@ namespace MoveIt.Furniture.Editor
                     source.category,
                     $"{source.displayName} by {source.author} ({source.source}), {source.license}, {source.url}");
 
+                var body = root.AddComponent<Rigidbody>();
+                body.useGravity = false;
+                body.isKinematic = true;
+
+                var arTransformer = root.AddComponent<ARTransformer>();
+                arTransformer.objectPlaneTranslationMode = ARTransformer.PlaneTranslationMode.Any;
+                arTransformer.enablePlaneClassificationFilter = false;
+                arTransformer.useInteractorOrientation = false;
+                arTransformer.minScale = 0.25f;
+                arTransformer.maxScale = 2f;
+                arTransformer.scaleSensitivity = 0.75f;
+                arTransformer.elasticity = 0.15f;
+                arTransformer.enableElasticBreakLimit = true;
+                arTransformer.elasticBreakLimit = 0.5f;
+
+                var grab = root.AddComponent<XRGrabInteractable>();
+                grab.colliders.Add(collider);
+                grab.useDynamicAttach = true;
+                grab.matchAttachPosition = true;
+                grab.matchAttachRotation = false;
+                grab.snapToColliderVolume = false;
+                grab.reinitializeDynamicAttachEverySingleGrab = false;
+                grab.attachEaseInTime = 0.15f;
+                grab.movementType = XRBaseInteractable.MovementType.Instantaneous;
+                grab.throwOnDetach = false;
+                grab.addDefaultGrabTransformers = true;
 
                 var folder = $"{k_Root}/Prefabs/{source.source}";
                 Directory.CreateDirectory(folder);
