@@ -10,8 +10,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Transformers;
 using Object = UnityEngine.Object;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Transformers;
 
 
 namespace MoveIt.Furniture.Editor
@@ -158,7 +156,7 @@ namespace MoveIt.Furniture.Editor
                 collider.size = bounds.size;
 
                 // Add the components needed for AR manipulation.
-                AddInteractionComponents(root);
+                AddInteractionComponents(root, collider);
 
                 // Preserve furniture catalog metadata.
                 var item = root.AddComponent<FurnitureItem>();
@@ -168,33 +166,6 @@ namespace MoveIt.Furniture.Editor
                     source.displayName,
                     source.category,
                     $"{source.displayName} by {source.author} ({source.source}), {source.license}, {source.url}");
-
-                var body = root.AddComponent<Rigidbody>();
-                body.useGravity = false;
-                body.isKinematic = true;
-
-                var arTransformer = root.AddComponent<ARTransformer>();
-                arTransformer.objectPlaneTranslationMode = ARTransformer.PlaneTranslationMode.Any;
-                arTransformer.enablePlaneClassificationFilter = false;
-                arTransformer.useInteractorOrientation = false;
-                arTransformer.minScale = 0.25f;
-                arTransformer.maxScale = 2f;
-                arTransformer.scaleSensitivity = 0.75f;
-                arTransformer.elasticity = 0.15f;
-                arTransformer.enableElasticBreakLimit = true;
-                arTransformer.elasticBreakLimit = 0.5f;
-
-                var grab = root.AddComponent<XRGrabInteractable>();
-                grab.colliders.Add(collider);
-                grab.useDynamicAttach = true;
-                grab.matchAttachPosition = true;
-                grab.matchAttachRotation = false;
-                grab.snapToColliderVolume = false;
-                grab.reinitializeDynamicAttachEverySingleGrab = false;
-                grab.attachEaseInTime = 0.15f;
-                grab.movementType = XRBaseInteractable.MovementType.Instantaneous;
-                grab.throwOnDetach = false;
-                grab.addDefaultGrabTransformers = true;
 
                 var folder = $"{k_Root}/Prefabs/{source.source}";
                 Directory.CreateDirectory(folder);
@@ -212,24 +183,48 @@ namespace MoveIt.Furniture.Editor
             }
         }
 
-        static void AddInteractionComponents(GameObject root)
+        // Adds each component once and applies the tuned settings from the object-controls branch.
+        // (After merging that branch with UI-changes, the components were added twice, and Unity can't add a
+        // second Rigidbody, so Build Prefabs failed.)
+        static void AddInteractionComponents(GameObject root, BoxCollider collider)
         {
             // Rigidbody: match the working AR template.
-            var body = root.GetComponent<Rigidbody>();
-
-            if (body == null)
-                body = root.AddComponent<Rigidbody>();
-
+            var body = GetOrAdd<Rigidbody>(root);
             body.useGravity = false;
             body.isKinematic = true;
 
-            // XR interaction: allows the object to be selected and grabbed.
-            if (root.GetComponent<XRGrabInteractable>() == null)
-                root.AddComponent<XRGrabInteractable>();
-
             // AR transformation: enables movement, rotation and scaling.
-            if (root.GetComponent<ARTransformer>() == null)
-                root.AddComponent<ARTransformer>();
+            // MoveIt's FurniturePlacementAssist locks scale to 1 at runtime, so furniture keeps its real size.
+            var arTransformer = GetOrAdd<ARTransformer>(root);
+            arTransformer.objectPlaneTranslationMode = ARTransformer.PlaneTranslationMode.Any;
+            arTransformer.enablePlaneClassificationFilter = false;
+            arTransformer.useInteractorOrientation = false;
+            arTransformer.minScale = 0.25f;
+            arTransformer.maxScale = 2f;
+            arTransformer.scaleSensitivity = 0.75f;
+            arTransformer.elasticity = 0.15f;
+            arTransformer.enableElasticBreakLimit = true;
+            arTransformer.elasticBreakLimit = 0.5f;
+
+            // XR interaction: allows the object to be selected and grabbed.
+            var grab = GetOrAdd<XRGrabInteractable>(root);
+            if (!grab.colliders.Contains(collider))
+                grab.colliders.Add(collider);
+            grab.useDynamicAttach = true;
+            grab.matchAttachPosition = true;
+            grab.matchAttachRotation = false;
+            grab.snapToColliderVolume = false;
+            grab.reinitializeDynamicAttachEverySingleGrab = false;
+            grab.attachEaseInTime = 0.15f;
+            grab.movementType = XRBaseInteractable.MovementType.Instantaneous;
+            grab.throwOnDetach = false;
+            grab.addDefaultGrabTransformers = true;
+        }
+
+        static T GetOrAdd<T>(GameObject root) where T : Component
+        {
+            var component = root.GetComponent<T>();
+            return component != null ? component : root.AddComponent<T>();
         }
 
         static string FindModelPath(Source source)
