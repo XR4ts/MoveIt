@@ -117,6 +117,9 @@ namespace MoveIt.AR
 
             if (FindAnyObjectByType<RoomLightEstimation>() == null)
                 features.AddComponent<RoomLightEstimation>();
+
+            if (FindAnyObjectByType<HelpOverlay>() == null)
+                features.AddComponent<HelpOverlay>();
         }
     }
 }
