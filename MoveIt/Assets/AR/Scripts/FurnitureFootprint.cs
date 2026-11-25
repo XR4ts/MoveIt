@@ -145,7 +145,8 @@ namespace MoveIt.AR
             if (s_LineMaterial == null)
             {
                 // Sprites/Default is in the project's Always Included Shaders, so it exists in builds.
-                s_LineMaterial = new Material(Shader.Find("Sprites/Default"));
+                // Queue 3100 draws it after erased-object fills, which would otherwise paint over it.
+                s_LineMaterial = new Material(Shader.Find("Sprites/Default")) { renderQueue = 3100 };
             }
 
             return s_LineMaterial;

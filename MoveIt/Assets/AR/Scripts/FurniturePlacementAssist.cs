@@ -126,6 +126,13 @@ namespace MoveIt.AR
 
             if (FindAnyObjectByType<FloorShadows>() == null)
                 features.AddComponent<FloorShadows>();
+
+            if (FindAnyObjectByType<ObjectEraser>() == null)
+                features.AddComponent<ObjectEraser>();
+
+            // After ObjectEraser, which adds the DepthObjectFitter this reads depth from.
+            if (FindAnyObjectByType<BackgroundMemory>() == null)
+                features.AddComponent<BackgroundMemory>();
         }
     }
 }
