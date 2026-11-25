@@ -120,6 +120,9 @@ namespace MoveIt.AR
 
             if (FindAnyObjectByType<HelpOverlay>() == null)
                 features.AddComponent<HelpOverlay>();
+
+            if (FindAnyObjectByType<SurfaceDots>() == null)
+                features.AddComponent<SurfaceDots>();
         }
     }
 }

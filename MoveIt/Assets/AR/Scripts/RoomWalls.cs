@@ -56,9 +56,49 @@ namespace MoveIt.AR
         public static void FindNear(Vector3 position, float maxDistance, List<Wall> results)
         {
             results.Clear();
+            foreach (var wall in AllWalls())
+            {
+                if (Mathf.Abs(wall.SignedDistance(position)) > maxDistance)
+                    continue;
 
+                if (!IsBesidePlane(wall.plane, position, lateralMargin))
+                    continue;
+
+                results.Add(wall);
+            }
+        }
+
+        /// <summary>
+        /// Adds every detected wall.
+        /// </summary>
+        public static void GetAll(List<Wall> results)
+        {
+            results.Clear();
+            results.AddRange(AllWalls());
+        }
+
+        /// <summary>
+        /// True when <paramref name="position"/> lies on one of <paramref name="walls"/>, within
+        /// <paramref name="tolerance"/> metres of its surface and within <paramref name="lateralTolerance"/> metres
+        /// of its detected area.
+        /// </summary>
+        public static bool IsOnWall(Vector3 position, List<Wall> walls, float tolerance, float lateralTolerance = 0.3f)
+        {
+            foreach (var wall in walls)
+            {
+                if (Mathf.Abs(wall.SignedDistance(position)) <= tolerance && IsBesidePlane(wall.plane, position, lateralTolerance))
+                    return true;
+            }
+
+            return false;
+        }
+
+        static IEnumerable<Wall> AllWalls()
+        {
             if (!TryGetDependencies())
-                return;
+                yield break;
+
+            var hasFloor = RoomFloor.TryGetY(out var floorY);
 
             foreach (var plane in s_PlaneManager.trackables)
             {
@@ -71,30 +111,50 @@ namespace MoveIt.AR
                 if (normal.sqrMagnitude < 0.5f)
                     continue;
 
+                // Fronts and sides of furniture (dressers, beds, cabinets) are detected as vertical planes too.
+                // A plane counts as a wall when it's taller than furniture usually is, or when it reaches higher up
+                // than furniture does (on a phone, plain walls are often only detected as a patch at eye height).
+                var extent = VerticalExtent(plane);
+                var top = plane.center.y + 0.5f * extent;
+                var reachesHigh = hasFloor && top - floorY >= minWallTop;
+                if (extent < minWallHeight && !reachesHigh)
+                    continue;
+
                 normal.Normalize();
 
                 // The user stands in the room, so the side of the wall the camera is on is the room side.
                 if (Vector3.Dot(s_Camera.position - plane.center, normal) < 0f)
                     normal = -normal;
 
-                var wall = new Wall(plane.center, normal, plane);
-
-                if (Mathf.Abs(wall.SignedDistance(position)) > maxDistance)
-                    continue;
-
-                if (!IsBesidePlane(plane, position))
-                    continue;
-
-                results.Add(wall);
+                yield return new Wall(plane.center, normal, plane);
             }
         }
 
+        /// <summary>
+        /// A vertical plane must reach at least this high, in metres, to count as a wall. Scan a little up
+        /// the wall for it to qualify.
+        /// </summary>
+        public const float minWallHeight = 1.1f;
+
+        /// <summary>
+        /// A shorter vertical plane still counts as a wall when its top is at least this high above the floor.
+        /// </summary>
+        public const float minWallTop = 1.4f;
+
+        // Height covered by the plane's detected area. Plane space has x and z in the plane; for a vertical
+        // plane, one or both of them have a vertical component.
+        static float VerticalExtent(ARPlane plane)
+        {
+            var t = plane.transform;
+            return Mathf.Abs(t.right.y) * plane.size.x + Mathf.Abs(t.forward.y) * plane.size.y;
+        }
+
         // True when position, projected onto the plane, falls within the plane's detected area plus the margin.
-        static bool IsBesidePlane(ARPlane plane, Vector3 position)
+        static bool IsBesidePlane(ARPlane plane, Vector3 position, float margin)
         {
             var local = plane.transform.InverseTransformPoint(position);
             var offset = new Vector2(local.x, local.z) - plane.centerInPlaneSpace;
-            var extents = plane.extents + new Vector2(lateralMargin, lateralMargin);
+            var extents = plane.extents + new Vector2(margin, margin);
             return Mathf.Abs(offset.x) <= extents.x && Mathf.Abs(offset.y) <= extents.y;
         }
 
