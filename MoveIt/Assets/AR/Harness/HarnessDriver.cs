@@ -268,7 +268,7 @@ namespace MoveIt.AR.Harness
             yield return Frames(5);
             yield return Shot("erase-2-fitted");
 
-            // The preview while adjusting is the clean (inpainted) fill, a few seconds after the fit.
+            // While adjusting, the real object stays visible; the clean (inpainted) fill is computed in the background.
             var previewWait = Time.realtimeSinceStartup + 60f;
             var previewStart = Time.realtimeSinceStartup;
             while (eraser.isInpainting && Time.realtimeSinceStartup < previewWait)

@@ -149,7 +149,8 @@ namespace MoveIt.AR
             RestoreSpawning();
         }
 
-        // Redoes the clean fill once the user has stopped changing the box, and says when it's being worked on.
+        // Redoes the clean fill in the background once the user has stopped changing the box, so it's ready (or
+        // nearly) when they tap Done. It isn't shown until then.
         void UpdatePreview()
         {
             if (m_Live == null)
@@ -160,12 +161,6 @@ namespace MoveIt.AR
                 m_InpaintDue = 0f;
                 m_Inpainter.Request(m_Live);
             }
-
-            var message = m_Live.inpainted || m_Live.allowLiveFill
-                ? m_AdjustMessage
-                : "Removing it\u2026 hold on a moment.";
-            if (m_Instructions.text != message)
-                m_Instructions.text = message;
         }
 
         // ----- Scripting (used by the test harness) -----
@@ -421,8 +416,8 @@ namespace MoveIt.AR
             SetState(State.Adjust);
             SetAdjustControlsVisible(!autoFitted);
             m_AdjustMessage = autoFitted
-                ? "Gone? Tap <b>Done</b>. If part of it shows, tap <b>Adjust</b>."
-                : "Couldn't measure it automatically. Drag, twist and resize the box until the object is gone.";
+                ? "Is the object inside the yellow box? Tap <b>Done</b> to remove it, or <b>Adjust</b> to fix the box."
+                : "Couldn't measure it automatically. Drag, twist and resize the box until it covers the object, then tap <b>Done</b>.";
             m_Instructions.text = m_AdjustMessage;
 
             // Photo now, while the camera points at the object; the clean fill shows a moment later.
@@ -479,7 +474,8 @@ namespace MoveIt.AR
                 m_Live.SetBox(pose, m_Size, walls);
             }
 
-            m_Live.erased = true;
+            // The real room stays visible while the box is placed and adjusted; Done removes the object.
+            m_Live.erased = false;
             UpdateOutline(bottomCenter, rotation);
             if (m_State == State.Adjust)
                 m_InpaintDue = Time.unscaledTime + k_InpaintDelay;
@@ -831,7 +827,7 @@ namespace MoveIt.AR
             m_InstructionBar = bar.gameObject;
 
             var progress = MoveItUI.CreateStatusBar("Erase Progress", out var progressText);
-            progressText.text = "Cleaning up where it was\u2026";
+            progressText.text = "Removing it\u2026";
             m_ProgressBar = progress.gameObject;
             m_ProgressBar.SetActive(false);
 
@@ -887,7 +883,7 @@ namespace MoveIt.AR
             m_AdjustControls.SetActive(visible);
             m_AdjustToggleLabel.text = visible ? "Hide controls" : "Adjust";
             if (visible && m_State == State.Adjust)
-                m_Instructions.text = "Drag to move, twist to rotate, and resize until the object is gone.";
+                m_Instructions.text = "Drag to move, twist to rotate, and resize until the box covers the object.";
         }
 
         // A label on the left and a slider filling the rest of the row.
